@@ -17,5 +17,7 @@ namespace WSEI_aspnet_projekt.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
     }
 }
