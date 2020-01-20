@@ -14,5 +14,6 @@ namespace WSEI_aspnet_projekt.Repositories
 		public void PutRecipe(Recipe recipe);
 		public void PostRecipe(Recipe recipe);
 		public void DeleteRecipe(Recipe recipe);
+		public List<Recipe> GetUserRecipes(string id);
 	}
 }

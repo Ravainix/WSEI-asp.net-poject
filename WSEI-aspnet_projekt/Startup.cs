@@ -36,6 +36,10 @@ namespace WSEI_aspnet_projekt
 
             services.AddScoped<IRecipesService, RecipesService>();
 
+            services.AddScoped<IIngredientsRepository, IngredientsRepository>();
+
+            services.AddScoped<IIngredientsService, IngredientsService>();
+
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -83,7 +87,7 @@ namespace WSEI_aspnet_projekt
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                    pattern: "{controller}/{action}/{id?}");
                 endpoints.MapRazorPages();
             });
 

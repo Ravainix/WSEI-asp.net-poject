@@ -22,6 +22,11 @@ public class RecipesRepository : IRecipesRepository
 		return await _context.Recipes.ToListAsync();
 	}
 
+	public List<Recipe> GetUserRecipes(string id)
+	{
+		return _context.Recipes.Where(r => r.UserId == id).ToList();
+	}
+
 	public Recipe GetRecipe(int id)
 	{
 		return _context.Recipes.Find(id);

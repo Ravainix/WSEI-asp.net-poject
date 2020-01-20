@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WSEI_aspnet_projekt.Data;
 using WSEI_aspnet_projekt.Models;
+using WSEI_aspnet_projekt.Services;
 
 namespace WSEI_aspnet_projekt.Controllers
 {
@@ -14,107 +15,69 @@ namespace WSEI_aspnet_projekt.Controllers
     [ApiController]
     public class IngredientsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private IIngredientsService _ingredientsService;
 
-        public IngredientsController(ApplicationDbContext context)
+        public IngredientsController(IIngredientsService ingredientsService)
         {
-            _context = context;
+            _ingredientsService = ingredientsService;
         }
 
         // GET: api/Ingredients
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Ingredient>>> GetIngredients()
         {
-            return await _context.Ingredients.ToListAsync();
+            return await _ingredientsService.GetIngredients();
         }
 
         // GET: api/Ingredients/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Ingredient>> GetIngredient(int id)
+        public ActionResult<Ingredient> GetIngredient(int id)
         {
-            var ingredient = await _context.Ingredients.FindAsync(id);
-
+            var ingredient = _ingredientsService.GetIngredient(id);
             if (ingredient == null)
             {
-                return NotFound();
+                Response.StatusCode = 400;
+                return Content("Ingredient with id = " + id + " doesn't exist");
             }
-
             return ingredient;
         }
 
         // PUT: api/Ingredients/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutIngredient(int id, [FromBody] Ingredient ingredient)
+        public ActionResult PutIngredient(int id, [FromBody] Ingredient ingredient)
         {
             if (id != ingredient.Id)
             {
-                return BadRequest();
+                Response.StatusCode = 400;
+                return Content("Id in url must be the same as in the body");
             }
 
-            _context.Entry(ingredient).State = EntityState.Modified;
-
-            try
+            MyResponse response = _ingredientsService.UpdateIngredient(id, ingredient);
+            if (response.isFailed())
             {
-                await _context.SaveChangesAsync();
+                Response.StatusCode = 400;
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!IngredientExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Content(response._message);
         }
 
         // POST: api/Ingredients
         [HttpPost]
-        public async Task<ActionResult<Ingredient>> PostIngredient([FromBody] Ingredient ingredient)
+        public ActionResult<Ingredient> PostIngredient([FromBody] Ingredient ingredient)
         {
-            _context.Ingredients.Add(ingredient);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (IngredientExists(ingredient.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            _ingredientsService.AddIngredient(ingredient);
             return CreatedAtAction("GetIngredient", new { id = ingredient.Id }, ingredient);
         }
 
         // DELETE: api/Ingredients/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Ingredient>> DeleteIngredient(int id)
+        public ActionResult<Ingredient> DeleteIngredient(int id)
         {
-            var ingredient = await _context.Ingredients.FindAsync(id);
-            if (ingredient == null)
+            MyResponse response = _ingredientsService.DeleteIngredient(id);
+            if (response.isFailed())
             {
-                return NotFound();
+                Response.StatusCode = 400;
             }
-
-            _context.Ingredients.Remove(ingredient);
-            await _context.SaveChangesAsync();
-
-            return ingredient;
-        }
-
-        private bool IngredientExists(int id)
-        {
-            return _context.Ingredients.Any(e => e.Id == id);
+            return Content(response._message);
         }
     }
 }

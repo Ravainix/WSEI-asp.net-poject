@@ -23,7 +23,11 @@ public class RecipesService : IRecipesService
 	public Recipe GetRecipe(int id) 
 	{
 		return _recipesRepository.GetRecipe(id);
-		
+	}
+
+	public List<Recipe> GetUserRecipes(string id)
+	{
+		return _recipesRepository.GetUserRecipes(id);
 	}
 
 	public MyResponse UpdateRecipe(int id, Recipe recipe)

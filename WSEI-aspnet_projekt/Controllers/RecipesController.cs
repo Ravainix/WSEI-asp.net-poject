@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WSEI_aspnet_projekt.Data;
@@ -10,28 +12,39 @@ using WSEI_aspnet_projekt.Services;
 
 namespace WSEI_aspnet_projekt.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/")]
     [ApiController]
     public class RecipesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-        IRecipesService _recipesService;
+        private IRecipesService _recipesService;
 
-        public RecipesController(ApplicationDbContext context, IRecipesService recipesService)
+        public RecipesController(IRecipesService recipesService)
         {
-            _context = context;
             _recipesService = recipesService;
         }
 
+        // GET: api/currentUserRecipes
+        [HttpGet("currentUserRecipes")]
+        public ActionResult<IEnumerable<Recipe>> GetCurrentUserRecipes()
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); //Not tested
+            if(userId == null)
+            {
+                Response.StatusCode = 400;
+                return Content("Can't recognize current user");
+            }
+            return _recipesService.GetUserRecipes(userId);
+        }
+
         // GET: api/Recipes
-        [HttpGet]
+        [HttpGet("recipes")]
         public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
         {
             return await _recipesService.GetRecipes();
         }
 
         // GET: api/Recipes/5
-        [HttpGet("{id}")]
+        [HttpGet("recipes/{id}")]
         public ActionResult<Recipe> GetRecipe(int id)
         {
             var recipe = _recipesService.GetRecipe(id);
@@ -44,7 +57,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // PUT: api/Recipes/5
-        [HttpPut("{id}")]
+        [HttpPut("recipes/{id}")]
         public ActionResult PutRecipe(int id, [FromBody] Recipe recipe)
         {
             if (id != recipe.Id)
@@ -62,7 +75,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // POST: api/Recipes
-        [HttpPost]
+        [HttpPost("recipes")]
         public ActionResult<Recipe> PostRecipe([FromBody] Recipe recipe)
         {
             _recipesService.AddRecipe(recipe);
@@ -70,7 +83,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // DELETE: api/Recipes/5
-        [HttpDelete("{id}")]
+        [HttpDelete("recipes/{id}")]
         public ActionResult<Recipe> DeleteRecipe(int id)
         {
             MyResponse response = _recipesService.DeleteRecipe(id);
