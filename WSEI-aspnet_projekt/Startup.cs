@@ -11,6 +11,8 @@ using WSEI_aspnet_projekt.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WSEI_aspnet_projekt.Services;
+using WSEI_aspnet_projekt.Repositories;
 
 namespace WSEI_aspnet_projekt
 {
@@ -29,6 +31,10 @@ namespace WSEI_aspnet_projekt
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("Application")));
+
+            services.AddScoped<IRecipesRepository, RecipesRepository>();
+
+            services.AddScoped<IRecipesService, RecipesService>();
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WSEI_aspnet_projekt.Data;
 using WSEI_aspnet_projekt.Models;
+using WSEI_aspnet_projekt.Services;
 
 namespace WSEI_aspnet_projekt.Controllers
 {
@@ -15,92 +15,71 @@ namespace WSEI_aspnet_projekt.Controllers
     public class RecipesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        IRecipesService _recipesService;
 
-        public RecipesController(ApplicationDbContext context)
+        public RecipesController(ApplicationDbContext context, IRecipesService recipesService)
         {
             _context = context;
+            _recipesService = recipesService;
         }
 
         // GET: api/Recipes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
         {
-            return await _context.Recipes.ToListAsync();
+            return await _recipesService.GetRecipes();
         }
 
         // GET: api/Recipes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Recipe>> GetRecipe(int id)
+        public ActionResult<Recipe> GetRecipe(int id)
         {
-            var recipe = await _context.Recipes.FindAsync(id);
-
+            var recipe = _recipesService.GetRecipe(id);
             if (recipe == null)
             {
-                return NotFound();
+                Response.StatusCode = 400;
+                return Content("Recipe with id = " + id + " doesn't exist"); 
             }
-
             return recipe;
         }
 
         // PUT: api/Recipes/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRecipe(int id, [FromBody] Recipe recipe)
+        public ActionResult PutRecipe(int id, [FromBody] Recipe recipe)
         {
             if (id != recipe.Id)
             {
-                return BadRequest();
+                Response.StatusCode = 400;
+                return Content("Id in url must be the same as in the body");
             }
 
-            _context.Entry(recipe).State = EntityState.Modified;
-
-            try
+            MyResponse response = _recipesService.UpdateRecipe(id, recipe);
+            if (response.isFailed()) 
             {
-                await _context.SaveChangesAsync();
+                Response.StatusCode = 400;
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RecipeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+                return Content(response._message);
         }
 
         // POST: api/Recipes
         [HttpPost]
-        public async Task<ActionResult<Recipe>> PostRecipe([FromBody] Recipe recipe)
+        public ActionResult<Recipe> PostRecipe([FromBody] Recipe recipe)
         {
-            _context.Recipes.Add(recipe);
-            await _context.SaveChangesAsync();
-
+            _recipesService.AddRecipe(recipe);
             return CreatedAtAction("GetRecipe", new { id = recipe.Id }, recipe);
         }
 
         // DELETE: api/Recipes/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Recipe>> DeleteRecipe(int id)
+        public ActionResult<Recipe> DeleteRecipe(int id)
         {
-            var recipe = await _context.Recipes.FindAsync(id);
-            if (recipe == null)
+            MyResponse response = _recipesService.DeleteRecipe(id);
+            if (response.isFailed())
             {
-                return NotFound();
+                Response.StatusCode = 400;
             }
-
-            _context.Recipes.Remove(recipe);
-            await _context.SaveChangesAsync();
-
-            return recipe;
+            return Content(response._message);
         }
 
-        private bool RecipeExists(int id)
-        {
-            return _context.Recipes.Any(e => e.Id == id);
-        }
     }
 }
