@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { NavItem, NavLink } from 'reactstrap';
+import { NavItem, NavLink, DropdownItem, DropdownMenu, UncontrolledDropdown, DropdownToggle } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import authService from './AuthorizeService';
 import { ApplicationPaths } from './ApiAuthorizationConstants';
@@ -45,14 +45,23 @@ export class LoginMenu extends Component {
     }
 
     authenticatedView(userName, profilePath, logoutPath) {
-        return (<Fragment>
-            <NavItem>
-                <NavLink tag={Link} className="text-dark" to={profilePath}>Hello {userName}</NavLink>
-            </NavItem>
-            <NavItem>
-                <NavLink tag={Link} className="text-dark" to={logoutPath}>Logout</NavLink>
-            </NavItem>
-        </Fragment>);
+        return (
+            <Fragment>
+                <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle className="text-dark" nav caret>
+                        {userName}
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                        <DropdownItem tag={Link} to={profilePath}>
+                                Settings
+                        </DropdownItem>
+                        <DropdownItem tag={Link} to={logoutPath}>
+                                Logout
+                        </DropdownItem>
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+            </Fragment>
+        );
 
     }
 
