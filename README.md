@@ -1,9 +1,9 @@
 ### Database configuration:
-> SQLLocalDb create myDb
-> SQLLocalDb start myDb
-> SQLCmd -S "(localdb)\myDb"
-> CREATE DATABASE [cookbook];
-> GO
+\> SQLLocalDb create myDb  
+\> SQLLocalDb start myDb  
+\> SQLCmd -S "(localdb)\myDb"  
+\> CREATE DATABASE [cookbook];  
+\> GO
 
 W projekcie: 
 1. View > Server Explorer
@@ -19,6 +19,6 @@ Jak nie macie frameworków to:
 - Microsoft.EntityFrameworkCore.Design (v 3.1.0)
 - Microsoft.EntityFrameworkCore.SqlServer (v 3.1.0)
 
-Update bazy:
-1. Install-Package Microsoft.EntityFrameworkCore.Tools
-2. Update-Database
+Update bazy:  
+\> Install-Package Microsoft.EntityFrameworkCore.Tools  
+\> Update-Database
