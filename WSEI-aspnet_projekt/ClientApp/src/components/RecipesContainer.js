@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react'
+import { Row } from 'reactstrap';
 import SingleRecipe from './SingleRecipe'
 
 export default class RecipiesContainer extends Component {
@@ -24,9 +25,9 @@ export default class RecipiesContainer extends Component {
     render() {
         const {data} = this.state
         return (
-            <div>
+            <Row> 
                 {data && data.map(recipe => <SingleRecipe key={recipe.id} {...recipe} />)}
-            </div>
+            </Row>
         )
     }
 }
