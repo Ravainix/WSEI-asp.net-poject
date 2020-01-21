@@ -2,31 +2,29 @@
 import { Row } from 'reactstrap';
 import SingleRecipe from './SingleRecipe'
 
+import * as RecipeApi from '../helpers/recipesApi'
+
+
 export default class RecipiesContainer extends Component {
 
     constructor(props) {
         super(props)
 
         this.state = {
-            data: null
+            recipes: null
         }
     }
 
-    componentDidMount() {
-        this.fetchAllRecipes()
-    }
-
-    fetchAllRecipes = async () => {
-        fetch("/api/Recipes")
-            .then(response => response.json())
-            .then(data => this.setState({data: data}))
+    componentDidMount = async () => {
+        const recipes = await RecipeApi.getAll()
+        this.setState({recipes})
     }
 
     render() {
-        const {data} = this.state
+        const { recipes } = this.state
         return (
             <Row> 
-                {data && data.map(recipe => <SingleRecipe key={recipe.id} {...recipe} />)}
+                {recipes && recipes.map(recipe => <SingleRecipe key={recipe.id} {...recipe} />)}
             </Row>
         )
     }

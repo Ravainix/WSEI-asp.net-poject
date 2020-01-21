@@ -7,6 +7,7 @@ import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizat
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 
 import RecipesContainer from './components/RecipesContainer';
+import AddRecipe from './components/AddRecipe';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -15,8 +16,14 @@ export default class App extends Component {
     return (
       <Layout>
         <Route exact path='/' component={Home} />
-            <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
-            <Route path="/recipes" component={RecipesContainer} />
+        <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+            <Route path="/recipes" render={({ match: { url } }) => (
+                <>
+                    <Route path={`${url}/`} component={RecipesContainer} exact />
+                    <Route path={`${url}/add`} component={AddRecipe} />
+                </>
+            )} />
+
       </Layout>
     );
   }
