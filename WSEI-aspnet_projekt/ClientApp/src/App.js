@@ -8,6 +8,7 @@ import { ApplicationPaths } from './components/api-authorization/ApiAuthorizatio
 
 import RecipesContainer from './components/RecipesContainer';
 import AddRecipe from './components/AddRecipe';
+import UpdateRecipe from './components/UpdateRecipe'
 
 export default class App extends Component {
   static displayName = App.name;
@@ -21,6 +22,7 @@ export default class App extends Component {
                 <>
                     <Route path={`${url}/`} component={RecipesContainer} exact />
                     <Route path={`${url}/add`} component={AddRecipe} />
+                    <Route path={`${url}/update/:id`} component={UpdateRecipe} />
                 </>
             )} />
 
