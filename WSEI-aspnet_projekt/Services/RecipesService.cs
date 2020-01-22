@@ -9,10 +9,12 @@ using WSEI_aspnet_projekt.Services;
 public class RecipesService : IRecipesService 
 {
 	IRecipesRepository _recipesRepository;
+	IIngredientsRepository _ingredientsRepository;
 
-	public RecipesService(IRecipesRepository recipesRepository)
+	public RecipesService(IRecipesRepository recipesRepository, IIngredientsRepository ingredientsRepository)
 	{
 		_recipesRepository = recipesRepository;
+		_ingredientsRepository = ingredientsRepository;
 	}
 
 	public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
@@ -51,6 +53,17 @@ public class RecipesService : IRecipesService
 	public void AddRecipe(Recipe recipe)
 	{
 		_recipesRepository.PostRecipe(recipe);
+	}
+
+	public void AddRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients)
+	{
+		_recipesRepository.PostRecipe(recipeWithIngredients.recipe);
+		int recipeId = recipeWithIngredients.recipe.Id;
+		foreach (Ingredient ingredient in recipeWithIngredients.ingredients)
+		{
+			ingredient.RecipeId = recipeId;
+			_ingredientsRepository.PostIngredient(ingredient);
+		}
 	}
 
 	public MyResponse DeleteRecipe(int id)

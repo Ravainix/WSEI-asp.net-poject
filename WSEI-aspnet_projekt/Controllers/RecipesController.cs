@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -80,6 +81,14 @@ namespace WSEI_aspnet_projekt.Controllers
         {
             _recipesService.AddRecipe(recipe);
             return CreatedAtAction("GetRecipe", new { id = recipe.Id }, recipe);
+        }
+
+        // POST: api/recipesWithIngredients
+        [HttpPost("recipesWithIngredients")]
+        public ActionResult<Recipe> PostRecipeWithIngredients([FromBody] RecipeWithIngredients recipeWithIngredients)
+        {
+            _recipesService.AddRecipeWithIngredients(recipeWithIngredients);
+            return Content("Recipe added succesfully");
         }
 
         // DELETE: api/Recipes/5

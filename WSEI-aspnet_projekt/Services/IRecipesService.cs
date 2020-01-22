@@ -15,5 +15,6 @@ namespace WSEI_aspnet_projekt.Services
 		public void AddRecipe(Recipe recipe);
 		public MyResponse DeleteRecipe(int id);
 		public List<Recipe> GetUserRecipes(string id);
+		public void AddRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients);
 	}
 }
