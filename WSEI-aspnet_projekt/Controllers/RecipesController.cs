@@ -25,11 +25,12 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // GET: api/currentUserRecipes
+        [Authorize]
         [HttpGet("currentUserRecipes")]
         public ActionResult<IEnumerable<Recipe>> GetCurrentUserRecipes()
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); //Not tested
-            if(userId == null)
+            string userId = GetUserId();
+            if (userId == null)
             {
                 Response.StatusCode = 400;
                 return Content("Can't recognize current user");
@@ -38,6 +39,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // GET: api/Recipes
+        [Authorize]
         [HttpGet("recipes")]
         public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
         {
@@ -45,6 +47,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // GET: api/Recipes/5
+        [Authorize]
         [HttpGet("recipes/{id}")]
         public ActionResult<Recipe> GetRecipe(int id)
         {
@@ -58,6 +61,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // PUT: api/Recipes/5
+        [Authorize]
         [HttpPut("recipes/{id}")]
         public ActionResult PutRecipe(int id, [FromBody] Recipe recipe)
         {
@@ -67,6 +71,13 @@ namespace WSEI_aspnet_projekt.Controllers
                 return Content("Id in url must be the same as in the body");
             }
 
+            string userId = GetUserId();
+            if (userId == null)
+            {
+                Response.StatusCode = 400;
+                return Content("Can't recognize current user");
+            }
+            recipe.UserId = userId;
             MyResponse response = _recipesService.UpdateRecipe(id, recipe);
             if (response.isFailed()) 
             {
@@ -76,9 +87,17 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // POST: api/Recipes
+        [Authorize]
         [HttpPost("recipes")]
         public ActionResult<Recipe> PostRecipe([FromBody] Recipe recipe)
         {
+            string userId = GetUserId();
+            if (userId == null)
+            {
+                Response.StatusCode = 400;
+                return Content("Can't recognize current user");
+            }
+            recipe.UserId = userId;
             _recipesService.AddRecipe(recipe);
             return CreatedAtAction("GetRecipe", new { id = recipe.Id }, recipe);
         }
@@ -92,6 +111,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // DELETE: api/Recipes/5
+        [Authorize]
         [HttpDelete("recipes/{id}")]
         public ActionResult<Recipe> DeleteRecipe(int id)
         {
@@ -101,6 +121,11 @@ namespace WSEI_aspnet_projekt.Controllers
                 Response.StatusCode = 400;
             }
             return Content(response._message);
+        }
+
+        private string GetUserId()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
     }

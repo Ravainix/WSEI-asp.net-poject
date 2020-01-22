@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // GET: api/Ingredients
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Ingredient>>> GetIngredients()
         {
@@ -30,6 +32,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // GET: api/Ingredients/5
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<Ingredient> GetIngredient(int id)
         {
@@ -43,6 +46,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // PUT: api/Ingredients/5
+        [Authorize]
         [HttpPut("{id}")]
         public ActionResult PutIngredient(int id, [FromBody] Ingredient ingredient)
         {
@@ -61,6 +65,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // POST: api/Ingredients
+        [Authorize]
         [HttpPost]
         public ActionResult<Ingredient> PostIngredient([FromBody] Ingredient ingredient)
         {
@@ -69,6 +74,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // DELETE: api/Ingredients/5
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult<Ingredient> DeleteIngredient(int id)
         {
