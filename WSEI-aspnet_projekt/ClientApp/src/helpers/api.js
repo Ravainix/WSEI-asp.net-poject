@@ -8,7 +8,6 @@
     )
 
 const apiCall = (url, method, body, resolve, reject) => {
-    console.log(body)
     fetch(url, {
         method: method,
         headers: {
