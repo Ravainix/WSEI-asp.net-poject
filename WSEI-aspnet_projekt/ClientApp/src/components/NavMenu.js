@@ -3,6 +3,8 @@ import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLi
 import { Link } from 'react-router-dom';
 import { LoginMenu } from './api-authorization/LoginMenu';
 
+import CurrentUserTest from './CurrentUserTest'
+
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
 
@@ -38,6 +40,9 @@ export class NavMenu extends Component {
                 </NavItem>
                 <NavItem>
                     <NavLink tag={Link} className="text-dark" to="/recipes/add">Add recipe</NavLink>
+                </NavItem>
+                <NavItem>
+                    <CurrentUserTest />
                 </NavItem>
                 <LoginMenu />
               </ul>
