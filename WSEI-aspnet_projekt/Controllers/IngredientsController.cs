@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -24,18 +25,28 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // GET: api/Ingredients
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Ingredient>>> GetIngredients()
         {
+            string userId = GetUserId();
+            if (userId == null)
+            {
+                Response.StatusCode = 401;
+                return Content("Unauthorized");
+            }
             return await _ingredientsService.GetIngredients();
         }
 
         // GET: api/Ingredients/5
-        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<Ingredient> GetIngredient(int id)
         {
+            string userId = GetUserId();
+            if (userId == null)
+            {
+                Response.StatusCode = 401;
+                return Content("Unauthorized");
+            }
             var ingredient = _ingredientsService.GetIngredient(id);
             if (ingredient == null)
             {
@@ -46,10 +57,15 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // PUT: api/Ingredients/5
-        [Authorize]
         [HttpPut("{id}")]
         public ActionResult PutIngredient(int id, [FromBody] Ingredient ingredient)
         {
+            string userId = GetUserId();
+            if (userId == null)
+            {
+                Response.StatusCode = 401;
+                return Content("Unauthorized");
+            }
             if (id != ingredient.Id)
             {
                 Response.StatusCode = 400;
@@ -65,19 +81,29 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // POST: api/Ingredients
-        [Authorize]
         [HttpPost]
         public ActionResult<Ingredient> PostIngredient([FromBody] Ingredient ingredient)
         {
+            string userId = GetUserId();
+            if (userId == null)
+            {
+                Response.StatusCode = 401;
+                return Content("Unauthorized");
+            }
             _ingredientsService.AddIngredient(ingredient);
             return CreatedAtAction("GetIngredient", new { id = ingredient.Id }, ingredient);
         }
 
         // DELETE: api/Ingredients/5
-        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult<Ingredient> DeleteIngredient(int id)
         {
+            string userId = GetUserId();
+            if (userId == null)
+            {
+                Response.StatusCode = 401;
+                return Content("Unauthorized");
+            }
             MyResponse response = _ingredientsService.DeleteIngredient(id);
             if (response.isFailed())
             {
@@ -85,5 +111,11 @@ namespace WSEI_aspnet_projekt.Controllers
             }
             return Content(response._message);
         }
+
+        private string GetUserId()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier);
+        }
+
     }
 }

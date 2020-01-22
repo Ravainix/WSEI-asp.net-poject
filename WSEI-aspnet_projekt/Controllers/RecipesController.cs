@@ -25,32 +25,41 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // GET: api/currentUserRecipes
-        [Authorize]
         [HttpGet("currentUserRecipes")]
         public ActionResult<IEnumerable<Recipe>> GetCurrentUserRecipes()
         {
             string userId = GetUserId();
             if (userId == null)
             {
-                Response.StatusCode = 400;
-                return Content("Can't recognize current user");
+                Response.StatusCode = 401;
+                return Content("Unauthorized");
             }
             return _recipesService.GetUserRecipes(userId);
         }
 
         // GET: api/Recipes
-        [Authorize]
         [HttpGet("recipes")]
         public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
         {
+            string userId = GetUserId();
+            if (userId == null)
+            {
+                Response.StatusCode = 401;
+                return Content("Unauthorized");
+            }
             return await _recipesService.GetRecipes();
         }
 
         // GET: api/Recipes/5
-        [Authorize]
         [HttpGet("recipes/{id}")]
         public ActionResult<Recipe> GetRecipe(int id)
         {
+            string userId = GetUserId();
+            if (userId == null)
+            {
+                Response.StatusCode = 401;
+                return Content("Unauthorized");
+            }
             var recipe = _recipesService.GetRecipe(id);
             if (recipe == null)
             {
@@ -61,7 +70,6 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // PUT: api/Recipes/5
-        [Authorize]
         [HttpPut("recipes/{id}")]
         public ActionResult PutRecipe(int id, [FromBody] Recipe recipe)
         {
@@ -74,8 +82,13 @@ namespace WSEI_aspnet_projekt.Controllers
             string userId = GetUserId();
             if (userId == null)
             {
+                Response.StatusCode = 401;
+                return Content("Unauthorized");
+            }
+            if (_recipesService.GetRecipe(id).UserId != userId)
+            {
                 Response.StatusCode = 400;
-                return Content("Can't recognize current user");
+                return Content("You are not a creator of that recipe, update rejected");
             }
             recipe.UserId = userId;
             MyResponse response = _recipesService.UpdateRecipe(id, recipe);
@@ -87,15 +100,14 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // POST: api/Recipes
-        [Authorize]
         [HttpPost("recipes")]
         public ActionResult<Recipe> PostRecipe([FromBody] Recipe recipe)
         {
             string userId = GetUserId();
             if (userId == null)
             {
-                Response.StatusCode = 400;
-                return Content("Can't recognize current user");
+                Response.StatusCode = 401;
+                return Content("Unauthorized");
             }
             recipe.UserId = userId;
             _recipesService.AddRecipe(recipe);
@@ -106,15 +118,31 @@ namespace WSEI_aspnet_projekt.Controllers
         [HttpPost("recipesWithIngredients")]
         public ActionResult<Recipe> PostRecipeWithIngredients([FromBody] RecipeWithIngredients recipeWithIngredients)
         {
+            string userId = GetUserId();
+            if (userId == null)
+            {
+                Response.StatusCode = 401;
+                return Content("Unauthorized");
+            }
             _recipesService.AddRecipeWithIngredients(recipeWithIngredients);
             return Content("Recipe added succesfully");
         }
 
         // DELETE: api/Recipes/5
-        [Authorize]
         [HttpDelete("recipes/{id}")]
         public ActionResult<Recipe> DeleteRecipe(int id)
         {
+            string userId = GetUserId();
+            if (userId == null)
+            {
+                Response.StatusCode = 401;
+                return Content("Unauthorized");
+            }
+            if (_recipesService.GetRecipe(id).UserId != userId)
+            {
+                Response.StatusCode = 400;
+                return Content("You are not a creator of that recipe, delete rejected");
+            }
             MyResponse response = _recipesService.DeleteRecipe(id);
             if (response.isFailed())
             {
