@@ -14,6 +14,7 @@ using WSEI_aspnet_projekt.Services;
 namespace WSEI_aspnet_projekt.Controllers
 {
     [Route("api/")]
+    [Authorize]
     [ApiController]
     public class RecipesController : ControllerBase
     {
@@ -29,11 +30,6 @@ namespace WSEI_aspnet_projekt.Controllers
         public ActionResult<IEnumerable<Recipe>> GetCurrentUserRecipes()
         {
             string userId = GetUserId();
-            if (userId == null)
-            {
-                Response.StatusCode = 401;
-                return Content("Unauthorized");
-            }
             return _recipesService.GetUserRecipes(userId);
         }
 
@@ -41,12 +37,6 @@ namespace WSEI_aspnet_projekt.Controllers
         [HttpGet("recipes")]
         public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
         {
-            string userId = GetUserId();
-            if (userId == null)
-            {
-                Response.StatusCode = 401;
-                return Content("Unauthorized");
-            }
             return await _recipesService.GetRecipes();
         }
 
@@ -54,12 +44,6 @@ namespace WSEI_aspnet_projekt.Controllers
         [HttpGet("recipes/{id}")]
         public ActionResult<Recipe> GetRecipe(int id)
         {
-            string userId = GetUserId();
-            if (userId == null)
-            {
-                Response.StatusCode = 401;
-                return Content("Unauthorized");
-            }
             var recipe = _recipesService.GetRecipe(id);
             if (recipe == null)
             {
@@ -80,11 +64,7 @@ namespace WSEI_aspnet_projekt.Controllers
             }
 
             string userId = GetUserId();
-            if (userId == null)
-            {
-                Response.StatusCode = 401;
-                return Content("Unauthorized");
-            }
+
             if (_recipesService.GetRecipe(id).UserId != userId)
             {
                 Response.StatusCode = 400;
@@ -104,11 +84,6 @@ namespace WSEI_aspnet_projekt.Controllers
         public ActionResult<Recipe> PostRecipe([FromBody] Recipe recipe)
         {
             string userId = GetUserId();
-            if (userId == null)
-            {
-                Response.StatusCode = 401;
-                return Content("Unauthorized");
-            }
             recipe.UserId = userId;
             _recipesService.AddRecipe(recipe);
             return CreatedAtAction("GetRecipe", new { id = recipe.Id }, recipe);
@@ -118,12 +93,6 @@ namespace WSEI_aspnet_projekt.Controllers
         [HttpPost("recipesWithIngredients")]
         public ActionResult<Recipe> PostRecipeWithIngredients([FromBody] RecipeWithIngredients recipeWithIngredients)
         {
-            string userId = GetUserId();
-            if (userId == null)
-            {
-                Response.StatusCode = 401;
-                return Content("Unauthorized");
-            }
             _recipesService.AddRecipeWithIngredients(recipeWithIngredients);
             return Content("Recipe added succesfully");
         }
@@ -133,11 +102,6 @@ namespace WSEI_aspnet_projekt.Controllers
         public ActionResult<Recipe> DeleteRecipe(int id)
         {
             string userId = GetUserId();
-            if (userId == null)
-            {
-                Response.StatusCode = 401;
-                return Content("Unauthorized");
-            }
             if (_recipesService.GetRecipe(id).UserId != userId)
             {
                 Response.StatusCode = 400;

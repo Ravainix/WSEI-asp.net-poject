@@ -14,6 +14,7 @@ using WSEI_aspnet_projekt.Services;
 namespace WSEI_aspnet_projekt.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class IngredientsController : ControllerBase
     {
@@ -28,12 +29,6 @@ namespace WSEI_aspnet_projekt.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Ingredient>>> GetIngredients()
         {
-            string userId = GetUserId();
-            if (userId == null)
-            {
-                Response.StatusCode = 401;
-                return Content("Unauthorized");
-            }
             return await _ingredientsService.GetIngredients();
         }
 
@@ -41,12 +36,6 @@ namespace WSEI_aspnet_projekt.Controllers
         [HttpGet("{id}")]
         public ActionResult<Ingredient> GetIngredient(int id)
         {
-            string userId = GetUserId();
-            if (userId == null)
-            {
-                Response.StatusCode = 401;
-                return Content("Unauthorized");
-            }
             var ingredient = _ingredientsService.GetIngredient(id);
             if (ingredient == null)
             {
@@ -60,12 +49,6 @@ namespace WSEI_aspnet_projekt.Controllers
         [HttpPut("{id}")]
         public ActionResult PutIngredient(int id, [FromBody] Ingredient ingredient)
         {
-            string userId = GetUserId();
-            if (userId == null)
-            {
-                Response.StatusCode = 401;
-                return Content("Unauthorized");
-            }
             if (id != ingredient.Id)
             {
                 Response.StatusCode = 400;
@@ -84,12 +67,6 @@ namespace WSEI_aspnet_projekt.Controllers
         [HttpPost]
         public ActionResult<Ingredient> PostIngredient([FromBody] Ingredient ingredient)
         {
-            string userId = GetUserId();
-            if (userId == null)
-            {
-                Response.StatusCode = 401;
-                return Content("Unauthorized");
-            }
             _ingredientsService.AddIngredient(ingredient);
             return CreatedAtAction("GetIngredient", new { id = ingredient.Id }, ingredient);
         }
@@ -98,12 +75,6 @@ namespace WSEI_aspnet_projekt.Controllers
         [HttpDelete("{id}")]
         public ActionResult<Ingredient> DeleteIngredient(int id)
         {
-            string userId = GetUserId();
-            if (userId == null)
-            {
-                Response.StatusCode = 401;
-                return Content("Unauthorized");
-            }
             MyResponse response = _ingredientsService.DeleteIngredient(id);
             if (response.isFailed())
             {
