@@ -6,7 +6,7 @@ const RecipesMenu = ({getRecipes}) => {
         <div className="">
             <ul className="d-flex justify-content-center nav nav-tabs my-2">
                 <li className="nav-item cursor-pointer">
-                    <a 
+                    <button 
                         className={"nav-link " + (active === "all" ? "active" : "") } 
                         onClick={() => {
                             getRecipes()
@@ -14,10 +14,10 @@ const RecipesMenu = ({getRecipes}) => {
                         }}
                     >
                         All recipes
-                    </a>
+                    </button>
                 </li>
                 <li className="nav-item cursor-pointer">
-                    <a
+                    <button
                         className={"nav-link " + (active === "user" ? "active" : "") }
                         onClick={() => {
                             getRecipes('GET_CURRENT_USER')
@@ -25,7 +25,7 @@ const RecipesMenu = ({getRecipes}) => {
                         }}
                     >
                         My recipes
-                    </a>
+                    </button>
                 </li>
             </ul>
         </div>

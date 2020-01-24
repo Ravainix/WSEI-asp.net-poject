@@ -9,6 +9,7 @@ export const get = async (url) => {
             })
                 .then(response => response.json())
                 .then(json => resolve(json))
+                .catch(err => console.error(err))
         }
     )
 }
@@ -31,6 +32,7 @@ const apiCall = async (url, method, body, resolve, reject) => {
             reject(response)
         }
     })
+    .catch(err => console.error(err))
 }
 
 export const put = (url, body) =>
