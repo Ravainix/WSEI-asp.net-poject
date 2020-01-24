@@ -1,17 +1,25 @@
-﻿export const get = url =>
-    new Promise(
+﻿import AuthorizeService from '../components/api-authorization/AuthorizeService'
+
+export const get = async (url) => {
+    const token = await AuthorizeService.getAccessToken()
+    return new Promise(
         (resolve, reject) => {
-            fetch(url)
+            fetch(url, {
+                headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+            })
                 .then(response => response.json())
                 .then(json => resolve(json))
         }
     )
+}
 
-const apiCall = (url, method, body, resolve, reject) => {
+const apiCall = async (url, method, body, resolve, reject) => {
+    const token = await AuthorizeService.getAccessToken()
     fetch(url, {
         method: method,
         headers: {
-            "Content-Type": 'application/json; charset=utf-8'
+            "Content-Type": 'application/json; charset=utf-8',
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(body)
     })
@@ -35,13 +43,15 @@ export const post = (url, body) =>
         (resolve, reject) => apiCall(url, 'POST', body, resolve, reject)
     )
 
-export const destroy = (url) =>
-    new Promise(
+export const destroy = async (url) => {
+    const token = await AuthorizeService.getAccessToken()
+    return new Promise(
         (resolve, reject) => {
             fetch(url, {
                 method: 'DELETE',
                 headers: {
-                    "Content-Type": 'application/json; charset=utf-8'
+                    "Content-Type": 'application/json; charset=utf-8',
+                    'Authorization': `Bearer ${token}`
                 }
             }).then(response => {
                 if (response.ok) {
@@ -52,3 +62,4 @@ export const destroy = (url) =>
             })
         }
     )
+}

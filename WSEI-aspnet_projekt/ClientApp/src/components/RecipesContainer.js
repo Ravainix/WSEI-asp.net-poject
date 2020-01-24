@@ -1,11 +1,11 @@
 ﻿import React, { Component } from 'react'
-import { Row } from 'reactstrap';
-import SingleRecipe from './SingleRecipe'
 
 import * as RecipeApi from '../helpers/recipesApi'
+import RecipesMenu from "./RecipesMenu";
+import RecipesList from './RecipesList'
 
 
-export default class RecipiesContainer extends Component {
+export default class RecipesContainer extends Component {
 
     constructor(props) {
         super(props)
@@ -16,16 +16,30 @@ export default class RecipiesContainer extends Component {
     }
 
     componentDidMount = async () => {
-        const recipes = await RecipeApi.getAll()
+        this.getRecipes()
+    }
+    
+    getRecipes = async (action) => {
+        let recipes
+        switch(action) {
+            case 'GET_CURRENT_USER':
+                recipes = await RecipeApi.getAllUser()
+                this.setState({recipes})
+                break;
+            default:
+                recipes = await RecipeApi.getAll()
+                break;
+        }
         this.setState({recipes})
     }
 
     render() {
         const { recipes } = this.state
         return (
-            <Row> 
-                {recipes && recipes.map(recipe => <SingleRecipe key={recipe.id} {...recipe} />)}
-            </Row>
+            <div className="border rounded">
+                <RecipesMenu getRecipes={this.getRecipes} />
+                {recipes && <RecipesList recipes={recipes}/>}
+            </div>
         )
     }
 }

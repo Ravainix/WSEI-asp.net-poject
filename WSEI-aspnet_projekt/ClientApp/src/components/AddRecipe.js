@@ -3,6 +3,7 @@ import RecipeForm from './RecipeForm'
 import { Redirect } from 'react-router';
 
 import * as RecipeApi from '../helpers/recipesApi'
+import authService from './api-authorization/AuthorizeService'
 
 export default class AddRecipe extends Component {
 
@@ -15,9 +16,9 @@ export default class AddRecipe extends Component {
     }
 
     handleFormSubmit = async formData => {
-        const resposne = await RecipeApi.create(formData)
+        const resposne = await RecipeApi.create(formData )
         console.log("Recipe created!")
-        this.setState({ recipe: resposne })
+        this.setState({ recipe: resposne})
     }
 
     render() {
@@ -26,7 +27,7 @@ export default class AddRecipe extends Component {
             <>
             <RecipeForm handleSubmitForm={this.handleFormSubmit} />
 
-            {recipe && <Redirect push to={{ pathname: "/recipes" }} />}
+            {recipe && <Redirect to={{ pathname: "/recipes", state: {isRecipeCreated: true} }}  />}
             </>
         )
     }
