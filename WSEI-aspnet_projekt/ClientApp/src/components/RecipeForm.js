@@ -1,12 +1,16 @@
 import React from 'react'
-import { Formik } from 'formik'
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Formik, FieldArray, Field } from 'formik'
+import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import authService from "./api-authorization/AuthorizeService";
 
 const defaultValues = {
     name: "",
     description: "",
-    UserId: "1",
-    image: ""
+    UserId: authService.getUser(),
+    image: "",
+    ingredients: [
+        { name: "", amount: ""}
+    ]
 }
 
 const RecipeForm = ({ handleSubmitForm, initialValues = defaultValues }) => {
@@ -62,7 +66,52 @@ const RecipeForm = ({ handleSubmitForm, initialValues = defaultValues }) => {
                             placeholder="Recipe image..."
                         />
                     </FormGroup>
+                    <FormGroup>
+                        <Label for="ingredients">Ingredients</Label>
+                        <FieldArray name="ingredients">
+                            {({ push, remove }) => (
+                                <div>
+                                    {props.values.ingredients.map( (p, index) => {
+                                        return (
+                                            <div key={index} className="d-flex pb-2 flex-column flex-md-row justify-content-between">
+                                                <div className="" style={{flex: "1"}}>
+                                                <Input
+                                                    type="textfield"
+                                                    name={`ingredients[${index}].name`}
+                                                    value={props.values.ingredients[index].name}
+                                                    onChange={props.handleChange}
+                                                    placeholder="Ingredient name..."
+                                                    required
+                                                />
+                                            </div>
+                                                <div className="" >
+                                                    <Input 
+                                                        type="textfield" 
+                                                        name={`ingredients[${index}].amount`} 
+                                                        value={props.values.ingredients[index].amount}
+                                                        onChange={props.handleChange}
+                                                        placeholder="Amount..."
+                                                    />
+                                                </div>
+                                                <Button color="danger" className="" onClick={() => remove(index)}>X</Button>
+                                            </div>
+                                        )
+                                    })}
+                                    <Button
+                                        type="button"
+                                        onClick={() => push({name: "", amount: ""} )}
+                                    >
+                                        Add ingredient
+                                    </Button>
+                                </div>
+                            )}
+    
+                        </FieldArray>
+                    </FormGroup>
                     <Button type="submit" outline color="primary">Add recipe</Button>
+                    <pre>
+                        {JSON.stringify(props.values, null, 2)}
+                    </pre>
                 </Form>
             )}
         </Formik>
@@ -70,6 +119,3 @@ const RecipeForm = ({ handleSubmitForm, initialValues = defaultValues }) => {
 }
 
 export default RecipeForm
-
-
-
