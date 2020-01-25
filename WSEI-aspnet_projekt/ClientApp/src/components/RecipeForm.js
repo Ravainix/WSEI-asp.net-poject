@@ -4,12 +4,14 @@ import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import authService from "./api-authorization/AuthorizeService";
 
 const defaultValues = {
-    name: "",
-    description: "",
-    UserId: authService.getUser(),
-    image: "",
+    recipe: {
+        name: "",
+        description: "",
+        UserId: "user",
+        image: ""    
+    },
     ingredients: [
-        { name: "", amount: ""}
+        { name: "", amount: 0}
     ]
 }
 
@@ -37,8 +39,8 @@ const RecipeForm = ({ handleSubmitForm, initialValues = defaultValues }) => {
                         <Label for="name">Name</Label>
                         <Input
                             type="text"
-                            name="name"
-                            value={props.values.name}
+                            name="recipe.name"
+                            value={props.values.recipe.name}
                             onChange={props.handleChange}
                             placeholder="Recipe name..."
                             required
@@ -48,8 +50,8 @@ const RecipeForm = ({ handleSubmitForm, initialValues = defaultValues }) => {
                         <Label for="description">Description</Label>
                         <Input
                             type="textarea"
-                            name="description"
-                            value={props.values.description}
+                            name="recipe.description"
+                            value={props.values.recipe.description}
                             onChange={props.handleChange}
                             placeholder="Recipe description..."
                             required
@@ -59,8 +61,8 @@ const RecipeForm = ({ handleSubmitForm, initialValues = defaultValues }) => {
                         <Label for="recipeImage">Image</Label>
                         <Input
                             type="url"
-                            name="image"
-                            value={props.values.image}
+                            name="recipe.image"
+                            value={props.values.recipe.image}
                             onChange={props.handleChange}
                             id="recipeImage"
                             placeholder="Recipe image..."
@@ -86,7 +88,7 @@ const RecipeForm = ({ handleSubmitForm, initialValues = defaultValues }) => {
                                             </div>
                                                 <div className="" >
                                                     <Input 
-                                                        type="textfield" 
+                                                        type="number" 
                                                         name={`ingredients[${index}].amount`} 
                                                         value={props.values.ingredients[index].amount}
                                                         onChange={props.handleChange}
@@ -99,7 +101,7 @@ const RecipeForm = ({ handleSubmitForm, initialValues = defaultValues }) => {
                                     })}
                                     <Button
                                         type="button"
-                                        onClick={() => push({name: "", amount: ""} )}
+                                        onClick={() => push({name: "", amount: 0} )}
                                     >
                                         Add ingredient
                                     </Button>

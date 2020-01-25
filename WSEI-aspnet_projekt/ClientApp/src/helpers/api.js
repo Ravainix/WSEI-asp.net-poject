@@ -29,7 +29,8 @@ const apiCall = async (url, method, body, resolve, reject) => {
             response.json()
                 .then(json => resolve(json))
         } else {
-            reject(response)
+            response.json()
+                .then(json => reject(json) )
         }
     })
     .catch(err => console.error(err))
