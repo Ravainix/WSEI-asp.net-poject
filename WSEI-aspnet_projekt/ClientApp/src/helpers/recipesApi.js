@@ -8,7 +8,7 @@ export const getAll = () => api.get(recipesApiURL())
 export const getAllUser = () => api.get('/api/currentUserRecipes')
 
 //create new recipe
-export const create = (params) => api.post(recipesApiURL(), { ...params })
+export const create = (params) => api.post(recipesApiURL() + "WithIngredients", { ...params })
 
 //update existing recipe 
 export const update = (id, params) => api.put(recipesApiURL(id), { ...params  })
