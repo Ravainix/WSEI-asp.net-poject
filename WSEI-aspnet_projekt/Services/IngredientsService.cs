@@ -37,9 +37,9 @@ namespace WSEI_aspnet_projekt.Services
 			return _ingredientsRepository.GetIngredient(id);
 		}
 
-		public async Task<ActionResult<IEnumerable<Ingredient>>> GetIngredients()
+		public List<Ingredient> GetIngredients()
 		{
-			return await _ingredientsRepository.GetIngredients();
+			return _ingredientsRepository.GetIngredients();
 		}
 
 		public MyResponse UpdateIngredient(int id, Ingredient ingredient)

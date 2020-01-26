@@ -19,17 +19,19 @@ namespace WSEI_aspnet_projekt.Controllers
     public class IngredientsController : ControllerBase
     {
         private IIngredientsService _ingredientsService;
+        private IRecipesService _recipesService;
 
-        public IngredientsController(IIngredientsService ingredientsService)
+        public IngredientsController(IIngredientsService ingredientsService, IRecipesService recipesService)
         {
             _ingredientsService = ingredientsService;
+            _recipesService = recipesService;
         }
 
         // GET: api/Ingredients
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Ingredient>>> GetIngredients()
+        public List<Ingredient> GetIngredients()
         {
-            return await _ingredientsService.GetIngredients();
+            return _ingredientsService.GetIngredients();
         }
 
         // GET: api/Ingredients/5
@@ -47,12 +49,18 @@ namespace WSEI_aspnet_projekt.Controllers
 
         // PUT: api/Ingredients/5
         [HttpPut("{id}")]
-        public ActionResult PutIngredient(int id, [FromBody] Ingredient ingredient)
+        public ActionResult<Ingredient> PutIngredient(int id, [FromBody] Ingredient ingredient)
         {
             if (id != ingredient.Id)
             {
                 Response.StatusCode = 400;
                 return Content("Id in url must be the same as in the body");
+            }
+
+            if (_recipesService.GetRecipe(ingredient.RecipeId).UserId != GetUserId())
+            {
+                Response.StatusCode = 400;
+                return Content("You are not the creator of the recipe associated with this ingredient, update rejected");
             }
 
             MyResponse response = _ingredientsService.UpdateIngredient(id, ingredient);
@@ -75,6 +83,12 @@ namespace WSEI_aspnet_projekt.Controllers
         [HttpDelete("{id}")]
         public ActionResult<Ingredient> DeleteIngredient(int id)
         {
+            if (_recipesService.GetRecipe(id).UserId != GetUserId())
+            {
+                Response.StatusCode = 400;
+                return Content("You are not a creator of that recipe, delete rejected");
+            }
+
             MyResponse response = _ingredientsService.DeleteIngredient(id);
             if (response.isFailed())
             {

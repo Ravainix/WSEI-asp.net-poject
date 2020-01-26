@@ -9,12 +9,12 @@ namespace WSEI_aspnet_projekt.Services
 {
 	public interface IRecipesService
 	{
-		public Task<ActionResult<IEnumerable<Recipe>>> GetRecipes();
+		public List<Recipe> GetRecipes();
 		public Recipe GetRecipe(int id);
 		public MyResponse UpdateRecipe(int id, Recipe recipe);
 		public void AddRecipe(Recipe recipe);
 		public MyResponse DeleteRecipe(int id);
 		public List<Recipe> GetUserRecipes(string id);
-		public void AddRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients);
+		public void AddRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients, string userId);
 	}
 }

@@ -17,9 +17,9 @@ public class RecipesRepository : IRecipesRepository
 		_context = context;
 	}
 
-	public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
+	public List<Recipe> GetRecipes()
 	{
-		return await _context.Recipes.ToListAsync();
+		return  _context.Recipes.ToList();
 	}
 
 	public List<Recipe> GetUserRecipes(string id)

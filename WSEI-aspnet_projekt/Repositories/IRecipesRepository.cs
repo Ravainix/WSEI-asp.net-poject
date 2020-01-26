@@ -9,7 +9,7 @@ namespace WSEI_aspnet_projekt.Repositories
 {
 	public interface IRecipesRepository
 	{
-		public Task<ActionResult<IEnumerable<Recipe>>> GetRecipes();
+		public List<Recipe> GetRecipes();
 		public Recipe GetRecipe(int id);
 		public void PutRecipe(Recipe recipe);
 		public void PostRecipe(Recipe recipe);

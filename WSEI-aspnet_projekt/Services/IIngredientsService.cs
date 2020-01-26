@@ -9,7 +9,7 @@ namespace WSEI_aspnet_projekt.Services
 {
 	public interface IIngredientsService
 	{
-		public Task<ActionResult<IEnumerable<Ingredient>>> GetIngredients();
+		public List<Ingredient> GetIngredients();
 		public Ingredient GetIngredient(int id);
 		public MyResponse UpdateIngredient(int id, Ingredient ingredient);
 		public void AddIngredient(Ingredient ingredient);

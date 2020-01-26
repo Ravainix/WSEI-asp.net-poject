@@ -9,7 +9,7 @@ namespace WSEI_aspnet_projekt.Repositories
 {
 	public interface IIngredientsRepository
 	{
-		public Task<ActionResult<IEnumerable<Ingredient>>> GetIngredients();
+		public List<Ingredient> GetIngredients();
 		public Ingredient GetIngredient(int id);
 		public void PutIngredient(Ingredient ingredient);
 		public void PostIngredient(Ingredient ingredient);

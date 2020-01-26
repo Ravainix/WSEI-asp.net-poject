@@ -23,9 +23,9 @@ namespace WSEI_aspnet_projekt.Repositories
 			return _context.Ingredients.Find(id);
 		}
 
-		public async Task<ActionResult<IEnumerable<Ingredient>>> GetIngredients()
+		public List<Ingredient> GetIngredients()
 		{
-			return await _context.Ingredients.ToListAsync();
+			return _context.Ingredients.ToList();
 		}
 
 		public void PostIngredient(Ingredient ingredient)

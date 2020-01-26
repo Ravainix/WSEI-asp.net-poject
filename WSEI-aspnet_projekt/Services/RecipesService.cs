@@ -17,9 +17,9 @@ public class RecipesService : IRecipesService
 		_ingredientsRepository = ingredientsRepository;
 	}
 
-	public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
+	public List<Recipe> GetRecipes()
 	{
-		return await _recipesRepository.GetRecipes();
+		return _recipesRepository.GetRecipes();
 	}
 
 	public Recipe GetRecipe(int id) 
@@ -55,13 +55,14 @@ public class RecipesService : IRecipesService
 		_recipesRepository.PostRecipe(recipe);
 	}
 
-	public void AddRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients)
+	public void AddRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients, string userId)
 	{
-		_recipesRepository.PostRecipe(recipeWithIngredients.recipe);
-		int recipeId = recipeWithIngredients.recipe.Id;
+		Recipe recipe = recipeWithIngredients.recipe;
+		recipe.UserId = userId;
+		_recipesRepository.PostRecipe(recipe);
 		foreach (Ingredient ingredient in recipeWithIngredients.ingredients)
 		{
-			ingredient.RecipeId = recipeId;
+			ingredient.RecipeId = recipeWithIngredients.recipe.Id;
 			_ingredientsRepository.PostIngredient(ingredient);
 		}
 	}

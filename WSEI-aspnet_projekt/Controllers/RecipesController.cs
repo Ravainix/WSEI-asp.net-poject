@@ -29,15 +29,14 @@ namespace WSEI_aspnet_projekt.Controllers
         [HttpGet("currentUserRecipes")]
         public ActionResult<IEnumerable<Recipe>> GetCurrentUserRecipes()
         {
-            string userId = GetUserId();
-            return _recipesService.GetUserRecipes(userId);
+            return _recipesService.GetUserRecipes(GetUserId());
         }
 
         // GET: api/Recipes
         [HttpGet("recipes")]
-        public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
+        public List<Recipe> GetRecipes()
         {
-            return await _recipesService.GetRecipes();
+            return _recipesService.GetRecipes();
         }
 
         // GET: api/Recipes/5
@@ -64,7 +63,6 @@ namespace WSEI_aspnet_projekt.Controllers
             }
 
             string userId = GetUserId();
-
             if (_recipesService.GetRecipe(id).UserId != userId)
             {
                 Response.StatusCode = 400;
@@ -83,8 +81,7 @@ namespace WSEI_aspnet_projekt.Controllers
         [HttpPost("recipes")]
         public ActionResult<Recipe> PostRecipe([FromBody] Recipe recipe)
         {
-            string userId = GetUserId();
-            recipe.UserId = userId;
+            recipe.UserId = GetUserId();
             _recipesService.AddRecipe(recipe);
             return CreatedAtAction("GetRecipe", new { id = recipe.Id }, recipe);
         }
@@ -93,7 +90,7 @@ namespace WSEI_aspnet_projekt.Controllers
         [HttpPost("recipesWithIngredients")]
         public ActionResult<Recipe> PostRecipeWithIngredients([FromBody] RecipeWithIngredients recipeWithIngredients)
         {
-            _recipesService.AddRecipeWithIngredients(recipeWithIngredients);
+            _recipesService.AddRecipeWithIngredients(recipeWithIngredients, GetUserId());
             return Content("Recipe added succesfully");
         }
 
@@ -101,8 +98,7 @@ namespace WSEI_aspnet_projekt.Controllers
         [HttpDelete("recipes/{id}")]
         public ActionResult<Recipe> DeleteRecipe(int id)
         {
-            string userId = GetUserId();
-            if (_recipesService.GetRecipe(id).UserId != userId)
+            if (_recipesService.GetRecipe(id).UserId != GetUserId())
             {
                 Response.StatusCode = 400;
                 return Content("You are not a creator of that recipe, delete rejected");
