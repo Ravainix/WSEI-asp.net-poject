@@ -19,7 +19,7 @@ namespace WSEI_aspnet_project_tests.SeleniumTests
             _driver = new ChromeDriver(@"C:\Users\wizze\source\repos\WSEI-aspnet-poject\drivers");
         }
         [Test]
-        public void GoogleTest()
+        public void Test()
         {
             var login = "test1@test.pl";
             _driver.Navigate().GoToUrl("https://localhost:44382/Identity/Account/Login");
