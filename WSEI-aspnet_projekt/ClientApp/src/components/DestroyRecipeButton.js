@@ -11,7 +11,7 @@ const DestroyRecipe = ({ id }) => {
     }
 
     return (
-            <Button onClick={() => handleClick(id)}>Delete recipe</Button>
+            <Button color="danger" onClick={() => handleClick(id)}>Delete</Button>
     )
 }
 

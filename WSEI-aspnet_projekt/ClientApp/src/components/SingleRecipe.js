@@ -3,9 +3,10 @@ import {
     Card, CardImg, CardText, CardBody,
     CardTitle, Col
 } from 'reactstrap';
-// import {  }
 
-import DestroyRecipe from './DestroyRecipe';
+import DestroyRecipeButton from './DestroyRecipeButton';
+import UpdateRecipeButton from "./UpdateRecipeButton";
+import ShowRecipeButton from "./ShowRecipeButton";
 
 const SingleRecipe = ({ name, description, image, id, userRecipes }) => {
     image = image ? image : `http://placehold.jp/320x180.png`
@@ -18,7 +19,11 @@ const SingleRecipe = ({ name, description, image, id, userRecipes }) => {
                 <CardImg width="100%" src={image} alt="Card image cap" />
                 <CardBody>
                 <CardText>{description}</CardText>
-                {userRecipes && <DestroyRecipe id={id} />}
+                <div className="d-flex justify-content-between">
+                    <ShowRecipeButton id={id} />
+                    {userRecipes && <UpdateRecipeButton id={id} />}
+                    {userRecipes && <DestroyRecipeButton id={id} />}
+                </div>
                 </CardBody>
             </Card>
         </Col>
