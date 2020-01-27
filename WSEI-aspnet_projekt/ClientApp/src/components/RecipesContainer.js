@@ -11,7 +11,8 @@ export default class RecipesContainer extends Component {
         super(props)
 
         this.state = {
-            recipes: null
+            recipes: null,
+            userRecipes: false
         }
     }
 
@@ -24,21 +25,21 @@ export default class RecipesContainer extends Component {
         switch(action) {
             case 'GET_CURRENT_USER':
                 recipes = await RecipeApi.getAllUser()
-                this.setState({recipes})
+                this.setState({recipes, userRecipes: true})
                 break;
             default:
                 recipes = await RecipeApi.getAll()
+                this.setState({recipes, userRecipes: false})
                 break;
         }
-        this.setState({recipes})
     }
 
     render() {
-        const { recipes } = this.state
+        const { recipes, userRecipes } = this.state
         return (
             <div className="border rounded">
                 <RecipesMenu getRecipes={this.getRecipes} />
-                {recipes && <RecipesList recipes={recipes}/>}
+                {recipes && <RecipesList recipes={recipes} userRecipes={userRecipes}/>}
             </div>
         )
     }
