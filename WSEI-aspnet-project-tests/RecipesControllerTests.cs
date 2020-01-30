@@ -89,7 +89,7 @@ namespace WSEI_aspnet_project_tests
 			_recipesService.Setup(i => i.GetUserRecipes("user1"))
 				.Returns(expectedList);
 
-			var resultList = _recipesController.GetCurrentUserRecipes();
+			var resultList = _recipesController.GetCurrentUserRecipes().Value;
 			
 			Assert.AreEqual(expectedList, resultList);
 		}
