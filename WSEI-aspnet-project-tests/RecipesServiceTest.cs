@@ -46,10 +46,10 @@ namespace WSEI_aspnet_project_tests
 		public void UpdateRecipeShouldSuccessAndForSecondTryFails()
 		{
 			recipe = new Recipe();
-			MyResponse resultResponse = _recipesService.UpdateRecipe(2, recipe);
+			MyResponse resultResponse = _recipesService.UpdateRecipe(95, recipe);
 			MyResponse expectedResponse = new MyResponse(true, "Recipe updated successfully");
 
-			Assert.AreEqual(resultResponse._message, expectedResponse._message);
+			Assert.AreEqual(resultResponse._message, "yhbg");
 			Assert.AreEqual(resultResponse._success, expectedResponse._success);
 			_recipesRepository.Verify(r => r.GetRecipe(2), Times.Never);
 			

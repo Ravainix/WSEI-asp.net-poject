@@ -63,7 +63,13 @@ namespace WSEI_aspnet_projekt.Controllers
             }
 
             string userId = GetUserId();
-            if (_recipesService.GetRecipe(id).UserId != userId)
+            Recipe recipeFromDb = _recipesService.GetRecipe(id);
+            if (recipeFromDb == null)
+            {
+                Response.StatusCode = 400;
+                return Content("Recipe with id = " + recipe.Id + " doesn't exist");
+            }
+            else if (recipeFromDb.UserId != userId)
             {
                 Response.StatusCode = 400;
                 return Content("You are not a creator of that recipe, update rejected");
@@ -98,11 +104,18 @@ namespace WSEI_aspnet_projekt.Controllers
         [HttpDelete("recipes/{id}")]
         public ActionResult<Recipe> DeleteRecipe(int id)
         {
-            if (_recipesService.GetRecipe(id).UserId != GetUserId())
+            Recipe recipeFromDb = _recipesService.GetRecipe(id);
+            if (recipeFromDb == null)
+            {
+                Response.StatusCode = 400;
+                return Content("Recipe with id = " + id + " doesn't exist");
+            }
+            else if (recipeFromDb.UserId != GetUserId())
             {
                 Response.StatusCode = 400;
                 return Content("You are not a creator of that recipe, delete rejected");
             }
+
             MyResponse response = _recipesService.DeleteRecipe(id);
             if (response.isFailed())
             {
