@@ -13,7 +13,7 @@ namespace WSEI_aspnet_projekt.Data
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
 		public ApplicationDbContext(
-            DbContextOptions options,
+            DbContextOptions<ApplicationDbContext> options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         { }
 
