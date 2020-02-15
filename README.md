@@ -18,6 +18,17 @@ Instalacja potrzebnych pakietów nuget:
 - Microsoft.EntityFrameworkCore (v 3.1.0)
 - Microsoft.EntityFrameworkCore.Design (v 3.1.0)
 - Microsoft.EntityFrameworkCore.SqlServer (v 3.1.0)
+-	Microsoft.AspNetCore.Identity.EntityFrameworkCore
+-	Microsoft.AspNetCore.ApiAuthorization.IdentityServer
+-	Microsoft.EntityFrameworkCore
+-	Microsoft.AspNetCore.Identity.UI
+-	Microsoft.AspNetCore.SpaServices.Extensions
+3. Pakiety do testów:
+-	NUnit
+-	NUnit3TestAdapter
+-	Moq
+-	Selenium
+
 
 Update bazy:  
 \> Install-Package Microsoft.EntityFrameworkCore.Tools  
