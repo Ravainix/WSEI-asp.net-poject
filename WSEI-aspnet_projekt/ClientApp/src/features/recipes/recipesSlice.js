@@ -17,12 +17,7 @@ const recipesSlice = createSlice({
             state.loading = true;
         },
         [fetchAllRecipes.fulfilled]: (state, action) => {
-            state.entities = action.payload.map((el) => ({
-                ...el,
-                ListPrice: el.ListPrice.toFixed(),
-                RBP: el.RBP.toFixed(),
-                ASP: el.ASP.toFixed(),
-            }));
+            state.entities = action.payload;
             state.loading = false;
         },
         [fetchAllRecipes.rejected]: (state, action) => {
@@ -31,4 +26,4 @@ const recipesSlice = createSlice({
     },
 });
 
-export default modelsSlice.reducer;
+export default recipesSlice.reducer;
