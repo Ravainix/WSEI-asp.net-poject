@@ -25,6 +25,8 @@ namespace WSEI_aspnet_projekt.Models
 		public bool Hidden { get; set; }
 		[Column(TypeName = "nvarchar(200)")]
 		public string Image { get; set; }
+		[Column(TypeName = "text")]
+		public string Instruction { get; set; }
 	}
 }
  
