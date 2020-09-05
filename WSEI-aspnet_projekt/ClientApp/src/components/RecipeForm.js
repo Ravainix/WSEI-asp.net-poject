@@ -111,9 +111,6 @@ const RecipeForm = ({ handleSubmitForm, initialValues = defaultValues }) => {
                         </FieldArray>
                     </FormGroup>
                     <Button type="submit" outline color="primary">Add recipe</Button>
-                    <pre>
-                        {JSON.stringify(props.values, null, 2)}
-                    </pre>
                 </Form>
             )}
         </Formik>
