@@ -14,5 +14,6 @@ namespace WSEI_aspnet_projekt.Repositories
 		public void PutIngredient(Ingredient ingredient);
 		public void PostIngredient(Ingredient ingredient);
 		public void DeleteIngredient(Ingredient ingredient);
+		public List<Ingredient> GetIngredientsForRecipe(int id);
 	}
 }

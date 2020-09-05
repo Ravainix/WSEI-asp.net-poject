@@ -1,7 +1,6 @@
 ﻿import React from 'react'
 import { useSelector } from 'react-redux'
 
-import RecipesMenu from "./RecipesMenu";
 import RecipesList from './RecipesList'
 
 
@@ -9,7 +8,7 @@ import RecipesList from './RecipesList'
     const selectRecipes = useSelector(state => state.recipes.entities)
 
     return (
-        <div className="border rounded">
+        <div className=" rounded">
             {selectRecipes && <RecipesList recipes={selectRecipes} />}
         </div>
     )

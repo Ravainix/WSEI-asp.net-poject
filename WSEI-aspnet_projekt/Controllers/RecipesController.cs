@@ -100,6 +100,13 @@ namespace WSEI_aspnet_projekt.Controllers
             return Content("Recipe added succesfully");
         }
 
+        // GET: api/recipesWithIngredients
+        [HttpGet("recipesWithIngredients/{id}")]
+        public RecipeWithIngredients GetRecipeWithIngredients(int id)
+        {
+            return _recipesService.GetRecipeWithIngredients(id);
+        }
+
         // DELETE: api/Recipes/5
         [HttpDelete("recipes/{id}")]
         public ActionResult<Recipe> DeleteRecipe(int id)
