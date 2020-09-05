@@ -1,0 +1,36 @@
+﻿.recipeItem-card {
+    height: 300px;
+    max-width: 200px;
+    text-align: center;
+    border: none;
+    
+    &:hover {
+        background-color: #F6F6F6;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+}
+
+.recipeItem-img {
+    margin: 0 auto;
+    width: 150px;
+    display: block;
+
+&--hover {
+    width: 80px;
+    margin: 0 auto;
+}
+         }
+
+.recipeItem-description {
+    margin: 0 auto;
+    display: none;
+    margin-top: 30px;
+
+    &--hover {
+        display: inherit;
+    }
+}

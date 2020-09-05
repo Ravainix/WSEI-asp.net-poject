@@ -1,18 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
+import { useDispatch } from 'react-redux'
+import { fetchAllRecipes } from '../features/recipes/recipesSlice'
+
 import { Container } from 'reactstrap';
 import { NavMenu } from './NavMenu';
 
-export class Layout extends Component {
-  static displayName = Layout.name;
 
-  render () {
+export const Layout = ({ children }) => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchAllRecipes())
+    }, [])
+
     return (
       <div>
         <NavMenu />
         <Container>
-          {this.props.children}
+          {children}
         </Container>
       </div>
     );
-  }
 }

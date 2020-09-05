@@ -7,6 +7,7 @@ import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizat
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 
 import RecipesContainer from './components/RecipesContainer';
+import RecipesAll from './components/RecipesAll';
 import AddRecipe from './components/AddRecipe';
 import UpdateRecipe from './components/UpdateRecipe'
 import {Switch} from "react-router-dom";
@@ -17,7 +18,7 @@ export default class App extends Component {
   render () {
     return (
       <Layout>
-        <Route exact path='/' component={Home} />
+            <Route exact path='/' component={RecipesAll} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
         <AuthorizeRoute path="/recipes" component={Recipes} />
       </Layout>
