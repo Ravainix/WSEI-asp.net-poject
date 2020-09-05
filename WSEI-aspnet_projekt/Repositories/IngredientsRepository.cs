@@ -28,6 +28,11 @@ namespace WSEI_aspnet_projekt.Repositories
 			return _context.Ingredients.ToList();
 		}
 
+		public List<Ingredient> GetIngredientsForRecipe(int id)
+		{
+			return _context.Ingredients.Where(i => i.RecipeId == id).ToList();
+		}
+
 		public void PostIngredient(Ingredient ingredient)
 		{
 			_context.Ingredients.Add(ingredient);

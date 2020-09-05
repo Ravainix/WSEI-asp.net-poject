@@ -67,6 +67,13 @@ public class RecipesService : IRecipesService
 		}
 	}
 
+	public RecipeWithIngredients GetRecipeWithIngredients(int id)
+	{
+		return new RecipeWithIngredients(
+			_recipesRepository.GetRecipe(id),
+			_ingredientsRepository.GetIngredientsForRecipe(id).ToArray());
+	}
+
 	public MyResponse DeleteRecipe(int id)
 	{
 		Recipe recipe = GetRecipe(id);
