@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WSEI-aspnet_projekt", "WSEI-aspnet_projekt\WSEI-aspnet_projekt.csproj", "{CD98E623-6016-47FA-9744-262D4E48924F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WSEI-aspnet-project-tests", "WSEI-aspnet-project-tests\WSEI-aspnet-project-tests.csproj", "{19F5F798-119D-479B-B952-6846DD21CB23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WSEI-aspnet-project-tests", "WSEI-aspnet-project-tests\WSEI-aspnet-project-tests.csproj", "{19F5F798-119D-479B-B952-6846DD21CB23}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F1305749-E9E5-4D58-BCA6-8ED392E0B801}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{19F5F798-119D-479B-B952-6846DD21CB23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19F5F798-119D-479B-B952-6846DD21CB23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19F5F798-119D-479B-B952-6846DD21CB23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1305749-E9E5-4D58-BCA6-8ED392E0B801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1305749-E9E5-4D58-BCA6-8ED392E0B801}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1305749-E9E5-4D58-BCA6-8ED392E0B801}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1305749-E9E5-4D58-BCA6-8ED392E0B801}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
