@@ -3,6 +3,13 @@ version: '3.4'
 services:
   wsei-aspnet_projekt:
     image: ${DOCKER_REGISTRY-}wseiaspnetprojekt
+    ports:
+      - "5001:443"
+    restart: "unless-stopped"
+    depends_on:
+      -  sqlserverService
+    environment:
+      - ASPNETCORE_URLS=http://+:80
     build:
       context: .
       dockerfile: WSEI-aspnet_projekt/Dockerfile
@@ -12,7 +19,7 @@ services:
     hostname: 'sqlserver'  
     environment:  
       ACCEPT_EULA: Y  
-      SA_PASSWORD: "cookbookpswd"  
+      SA_PASSWORD: "cookbook(!)Password"  
     volumes:  
       - ./data/mssql:/var/opt/mssql3  
     ports:  
