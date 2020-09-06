@@ -1,0 +1,1 @@
+export const SHARE_URL = window.location.href;

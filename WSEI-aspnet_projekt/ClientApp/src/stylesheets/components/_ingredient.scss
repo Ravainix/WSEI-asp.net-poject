@@ -1,0 +1,14 @@
+﻿.ingredient {
+    cursor: pointer;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    margin-left: 2rem;
+
+    &::first-letter {
+        text-transform: uppercase;
+    }
+
+    &-strikethrough {
+        text-decoration: line-through;
+    }
+}
