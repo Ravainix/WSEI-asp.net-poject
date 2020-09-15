@@ -8,7 +8,7 @@ import RecipesList from './RecipesList'
     const selectRecipes = useSelector(state => state.recipes.entities)
 
     return (
-        <div className=" rounded">
+        <div className="rounded">
             {selectRecipes && <RecipesList recipes={selectRecipes} />}
         </div>
     )

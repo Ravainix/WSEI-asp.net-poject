@@ -1,4 +1,6 @@
-﻿a.navbar-brand {
+﻿@import '../mixins/breakpoints.scss';
+
+a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
@@ -30,4 +32,10 @@ html {
 
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.ml-md-6 {
+  @include breakpoint(md) {
+    margin-left: 6rem;
+  }
 }

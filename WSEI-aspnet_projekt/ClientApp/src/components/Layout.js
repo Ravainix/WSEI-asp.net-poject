@@ -17,7 +17,7 @@ export const Layout = ({ children }) => {
     return (
       <div>
         <NavMenu />
-        <Container style={{marginTop: 100}}>
+        <Container style={{marginTop: 100, minHeight: 700}}>
           {children}
         </Container>
         <Footer />
