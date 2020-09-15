@@ -4,6 +4,21 @@
   word-break: break-all;
 }
 
+.navbar {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+
+  backdrop-filter: saturate(180%) blur(20px);
+  
+  left: 0px;
+  right: 0px;
+  top: 0px;
+
+  position: fixed;
+  z-index: 11;
+  border: 0 solid #d2d6dc;
+}
+
 html {
   font-size: 14px;
 }

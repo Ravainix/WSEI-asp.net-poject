@@ -1,4 +1,6 @@
-﻿.singleRecipe-image {
+﻿@import '../mixins/breakpoints.scss';
+
+.singleRecipe-image {
     img {
         width: 100%;
     }
@@ -51,12 +53,20 @@
     height: 75px;
     background-color: #8ac256;
 
-    transform: translate(100%, 50%);
-    position: absolute;
-
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-around;  
+    
+    @include breakpoint(lg) {
+        transform: translate(75%, 50%);
+        position: absolute;
+    }
+
+    @include breakpoint(xl) {
+        transform: translate(100%, 50%);
+        position: absolute;
+    }
+    
 
     div {
         display: flex;

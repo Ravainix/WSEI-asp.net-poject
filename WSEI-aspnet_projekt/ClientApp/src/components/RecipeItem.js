@@ -15,7 +15,7 @@ const RecipeItem = ({ name, description, image, id, userRecipes }) => {
 
     image = image ? image : `http://placehold.jp/150x150.png`
     return (
-        <Col sm={{ size: 3 }} className="py-3">
+        <Col sm={{ size: 1 }} md={{ size: 3 }} className="py-md-3">
             <Card
                 className="recipeItem-card"
                 onMouseEnter={() => setIsHover(true)}
