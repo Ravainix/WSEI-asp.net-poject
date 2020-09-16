@@ -18,7 +18,7 @@ export default class UpdateRecipe extends Component {
     componentDidMount = async () => {
         const { id } = this.props.match.params
 
-        const response = await RecipeApi.get(id)
+        const response = await RecipeApi.getWithIngredients(id)
 
         this.setState({ draft: response })
     }

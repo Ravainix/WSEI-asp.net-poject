@@ -28,7 +28,7 @@ const RecipeSingle = () => {
         recipe ? (
             <>
                 <Row className="singleRecipe-image">
-                    <Col>{/* <pre>{JSON.stringify(recipe)}</pre> */}
+                    <Col>
                         <img  src="http://michalwrzosek.pl/wp-content/uploads/2020/07/bok-5.jpg" alt={recipe.name} />
                     </Col>
                 </Row>
@@ -44,17 +44,17 @@ const RecipeSingle = () => {
                                 <h2>{recipe.name}</h2>
                             </Col>
                         </Row>
-                        <Row className="singleRecipe-description">
+                        <Row className="singleRecipe-description my-3">
                             <Col>
                                 <p>{recipe.description}</p>
                             </Col>
                         </Row>
-                        <Row className="singleRecipe-preparation">
+                        <Row className="singleRecipe-preparation ">
                             <Col>
                                 <h4>Preparation</h4>
                             </Col>
                         </Row>
-                        <Row className="singleRecipe-preparation">
+                        <Row className="singleRecipe-preparation my-3">
                             <Col>
                                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                             </Col>

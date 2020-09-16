@@ -1,7 +1,24 @@
-﻿a.navbar-brand {
+﻿@import '../mixins/breakpoints.scss';
+
+a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
+}
+
+.navbar {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+
+  backdrop-filter: saturate(180%) blur(20px);
+  
+  left: 0px;
+  right: 0px;
+  top: 0px;
+
+  position: fixed;
+  z-index: 11;
+  border: 0 solid #d2d6dc;
 }
 
 html {
@@ -15,4 +32,10 @@ html {
 
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.ml-md-6 {
+  @include breakpoint(md) {
+    margin-left: 6rem;
+  }
 }

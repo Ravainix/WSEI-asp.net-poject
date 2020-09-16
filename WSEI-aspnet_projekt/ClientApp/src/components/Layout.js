@@ -4,6 +4,7 @@ import { fetchAllRecipes } from '../features/recipes/recipesSlice'
 
 import { Container } from 'reactstrap';
 import { NavMenu } from './NavMenu';
+import Footer from './Footer';
 
 
 export const Layout = ({ children }) => {
@@ -16,9 +17,12 @@ export const Layout = ({ children }) => {
     return (
       <div>
         <NavMenu />
-        <Container>
-          {children}
-        </Container>
+          <main>
+            <Container style={{marginTop: 100, minHeight: 700}}>
+              {children}
+            </Container>
+          </main>
+        <Footer />
       </div>
     );
 }

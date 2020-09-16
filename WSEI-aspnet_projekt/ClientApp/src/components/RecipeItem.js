@@ -8,14 +8,13 @@ import { Link } from "react-router-dom";
 
 import DestroyRecipeButton from './DestroyRecipeButton';
 import UpdateRecipeButton from "./UpdateRecipeButton";
-import ShowRecipeButton from "./ShowRecipeButton";
 
 const RecipeItem = ({ name, description, image, id, userRecipes }) => {
     const [isHover, setIsHover] = useState(false);
 
     image = image ? image : `http://placehold.jp/150x150.png`
     return (
-        <Col sm={{ size: 3 }} className="py-3">
+        <Col sm={{ size: 1 }} md={{ size: 3 }} className="py-3">
             <Card
                 className="recipeItem-card"
                 onMouseEnter={() => setIsHover(true)}

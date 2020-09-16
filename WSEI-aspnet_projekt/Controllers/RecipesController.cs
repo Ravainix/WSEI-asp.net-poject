@@ -14,7 +14,6 @@ using WSEI_aspnet_projekt.Services;
 namespace WSEI_aspnet_projekt.Controllers
 {
     [Route("api/")]
-    [Authorize]
     [ApiController]
     public class RecipesController : ControllerBase
     {
@@ -53,6 +52,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // PUT: api/Recipes/5
+        [Authorize]
         [HttpPut("recipes/{id}")]
         public ActionResult PutRecipe(int id, [FromBody] Recipe recipe)
         {
@@ -84,6 +84,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // POST: api/Recipes
+        [Authorize]
         [HttpPost("recipes")]
         public ActionResult<Recipe> PostRecipe([FromBody] Recipe recipe)
         {
@@ -93,6 +94,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // POST: api/recipesWithIngredients
+        [Authorize]
         [HttpPost("recipesWithIngredients")]
         public ActionResult<Recipe> PostRecipeWithIngredients([FromBody] RecipeWithIngredients recipeWithIngredients)
         {
@@ -108,6 +110,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // DELETE: api/Recipes/5
+        [Authorize]
         [HttpDelete("recipes/{id}")]
         public ActionResult<Recipe> DeleteRecipe(int id)
         {

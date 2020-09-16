@@ -66,6 +66,7 @@ const RecipeForm = ({ handleSubmitForm, initialValues = defaultValues }) => {
                             onChange={props.handleChange}
                             id="recipeImage"
                             placeholder="Recipe image..."
+                            required
                         />
                     </FormGroup>
                     <FormGroup>
