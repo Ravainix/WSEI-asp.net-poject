@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const UpdateRecipeButton = ({ id }) => {
     return (
-        <Link to={`/recipes/update/${id}`}><Button color="info" >Edit</Button></Link>
+        <Link to={`/recipes/update/${id}`}><Button color="info">Edit</Button></Link>
     )
 }
 

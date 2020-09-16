@@ -7,7 +7,6 @@ import { Home } from './components/Home';
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
-
 import RecipesContainer from './components/RecipesContainer';
 import RecipeSingle from './components/RecipeSingle';
 import RecipesAll from './components/RecipesAll';
@@ -22,9 +21,9 @@ export default class App extends Component {
     return (
         <Layout>
             <Switch>
-                <Route exact path='/' component={RecipesAll} />
+                <Route exact path='/' component={Home} />
                 <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
-                <AuthorizeRoute path="/recipes" component={Recipes} />
+                <Route path="/recipes" component={Recipes} />
                 <Route path="*" component={NoMatch} />
             </Switch>
       </Layout>
@@ -34,8 +33,8 @@ export default class App extends Component {
 
 const Recipes = ({ match: { url } }) => (
         <Switch>
-            <Route path={`${url}/update/:id`} component={UpdateRecipe} />
-            <Route path={`${url}/add`} component={AddRecipe} />
+            <AuthorizeRoute path={`${url}/update/:id`} component={UpdateRecipe} />
+            <AuthorizeRoute path={`${url}/add`} component={AddRecipe} />
             <Route path={`${url}/:id`} component={RecipeSingle} />
             <Route exact path={`${url}/`} component={RecipesContainer} />
         </Switch>

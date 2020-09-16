@@ -1,5 +1,5 @@
 ﻿import * as api from './api'
-import { recipesApiURL } from './routes'
+import { recipesApiURL, recipesWithIngredientsApiURL } from './routes'
 
 //get all recipes 
 export const getAll = () => api.get(recipesApiURL())
@@ -18,3 +18,6 @@ export const destroy = (id) => api.destroy(recipesApiURL(id))
 
 //get existing recipe
 export const get = (id) => api.get(recipesApiURL(id))
+
+//get existing recipe with ingredients
+export const getWithIngredients = (id) => api.get(recipesWithIngredientsApiURL(id))
