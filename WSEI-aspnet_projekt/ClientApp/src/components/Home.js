@@ -8,8 +8,9 @@ export class Home extends Component {
   render () {
     return (
       <>
-            <h1>Lorem ipsum dolor sit amet!</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut maximus purus nunc, nec convallis augue ornare at.</p>
+            <div className="text-center">
+              <h2>Check out the featured recipes!</h2>
+            </div>
             <RecipesAll />
       </>
     );
