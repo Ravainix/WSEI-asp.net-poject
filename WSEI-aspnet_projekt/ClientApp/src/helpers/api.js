@@ -25,13 +25,9 @@ const apiCall = async (url, method, body, resolve, reject) => {
         body: JSON.stringify(body)
     })
     .then(response => {
-        if (response.ok) {
-            response.json()
-                .then(json => resolve(json))
-        } else {
-            response.json()
-                .then(json => reject(json) )
-        }
+        response.ok
+          ? resolve(handleResponseStatusAndContentType(response))
+          : reject(handleResponseStatusAndContentType(response));
     })
     .catch(err => console.error(err))
 }
@@ -66,3 +62,14 @@ export const destroy = async (url) => {
         }
     )
 }
+
+const handleResponseStatusAndContentType = (response) => {
+    const contentType = response.headers.get('content-type');
+  
+    if (response.status === 401) throw new Error('Request was not authorized.');
+  
+    if (contentType === null) return new Promise(() => null);
+    else if (contentType.startsWith('application/json;')) return response.json();
+    else if (contentType.startsWith('text/plain;')) return response.text();
+    else throw new Error(`Unsupported response content-type: ${contentType}`);
+  }
