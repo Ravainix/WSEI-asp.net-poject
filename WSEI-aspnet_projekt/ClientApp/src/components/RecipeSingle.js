@@ -5,8 +5,9 @@ import { getWithIngredients } from '../helpers/recipesApi'
 import { Row, Col } from 'reactstrap'
 import Ingredient from './Ingredient'
 import ShareRecipe from './ShareRecipe'
+import Loader from './Loader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserFriends, faHourglass } from '@fortawesome/free-solid-svg-icons' 
+import { faUserFriends, faHourglass } from '@fortawesome/free-solid-svg-icons'
 
 const RecipeSingle = () => {
     const { id } = useParams();
@@ -16,8 +17,8 @@ const RecipeSingle = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            getWithIngredients(id).then( (data) => 
-            setData(data))
+            getWithIngredients(id)
+                .then( (data) => setData(data))
         }
         fetchData()
     }, [])
@@ -80,7 +81,7 @@ const RecipeSingle = () => {
             </>
         ) : (
             <>
-                Loading...
+                <Loader />
             </>
         )
     )
