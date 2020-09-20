@@ -7,6 +7,7 @@ const defaultValues = {
     recipe: {
         name: "",
         description: "",
+        instruction: "",
         UserId: "user",
         image: ""    
     },
@@ -54,6 +55,17 @@ const RecipeForm = ({ handleSubmitForm, initialValues = defaultValues }) => {
                             value={props.values.recipe.description}
                             onChange={props.handleChange}
                             placeholder="Recipe description..."
+                            required
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="instruction">Instruction</Label>
+                        <Input
+                            type="textarea"
+                            name="recipe.instruction"
+                            value={props.values.recipe.instruction}
+                            onChange={props.handleChange}
+                            placeholder="Recipe instruction..."
                             required
                         />
                     </FormGroup>

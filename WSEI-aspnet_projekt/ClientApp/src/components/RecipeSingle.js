@@ -55,7 +55,7 @@ const RecipeSingle = () => {
                         </Row>
                         <Row className="singleRecipe-preparation my-3">
                             <Col>
-                                <p></p>
+                                <p>{data.recipe.instruction}</p>
                             </Col>
                         </Row>
                     </Col>
