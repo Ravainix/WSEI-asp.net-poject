@@ -25,6 +25,7 @@ namespace WSEI_aspnet_projekt.Controllers
         }
 
         // GET: api/currentUserRecipes
+        [Authorize]
         [HttpGet("currentUserRecipes")]
         public ActionResult<IEnumerable<Recipe>> GetCurrentUserRecipes()
         {

@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WSEI_aspnet_projekt.Services;
 using WSEI_aspnet_projekt.Repositories;
+using System.Text.Json.Serialization;
 
 namespace WSEI_aspnet_projekt
 {
@@ -51,6 +52,12 @@ namespace WSEI_aspnet_projekt
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddMvc()
+                .AddJsonOptions(opts =>
+                {
+                    opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
