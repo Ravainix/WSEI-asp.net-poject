@@ -15,7 +15,7 @@ namespace WSEI_aspnet_project_tests
 {
 	class RecipesControllerTests
 	{
-		private Mock<IRecipesService> _recipesService = new Mock<IRecipesService>();
+		private readonly Mock<IRecipesService> _recipesService = new Mock<IRecipesService>();
 		private RecipesController _recipesController;
 		[OneTimeSetUp]
 		public void Setup()

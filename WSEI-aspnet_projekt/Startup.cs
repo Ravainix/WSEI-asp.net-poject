@@ -41,6 +41,8 @@ namespace WSEI_aspnet_projekt
 
             services.AddScoped<IIngredientsService, IngredientsService>();
 
+            services.AddScoped<IFileService, FileService>();
+
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 

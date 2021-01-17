@@ -18,8 +18,8 @@ namespace WSEI_aspnet_projekt.Controllers
     [ApiController]
     public class IngredientsController : ControllerBase
     {
-        private IIngredientsService _ingredientsService;
-        private IRecipesService _recipesService;
+        private readonly IIngredientsService _ingredientsService;
+        private readonly IRecipesService _recipesService;
 
         public IngredientsController(IIngredientsService ingredientsService, IRecipesService recipesService)
         {
@@ -64,11 +64,11 @@ namespace WSEI_aspnet_projekt.Controllers
             }
 
             MyResponse response = _ingredientsService.UpdateIngredient(id, ingredient);
-            if (response.isFailed())
+            if (response.IsFailed())
             {
                 Response.StatusCode = 400;
             }
-            return Content(response._message);
+            return Content(response.Message);
         }
 
         // POST: api/Ingredients
@@ -90,11 +90,11 @@ namespace WSEI_aspnet_projekt.Controllers
             }
 
             MyResponse response = _ingredientsService.DeleteIngredient(id);
-            if (response.isFailed())
+            if (response.IsFailed())
             {
                 Response.StatusCode = 400;
             }
-            return Content(response._message);
+            return Content(response.Message);
         }
 
         private string GetUserId()

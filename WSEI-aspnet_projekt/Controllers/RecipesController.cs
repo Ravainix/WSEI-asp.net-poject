@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ namespace WSEI_aspnet_projekt.Controllers
     [ApiController]
     public class RecipesController : ControllerBase
     {
-        private IRecipesService _recipesService;
+        private readonly IRecipesService _recipesService;
 
         public RecipesController(IRecipesService recipesService)
         {
@@ -77,11 +78,11 @@ namespace WSEI_aspnet_projekt.Controllers
             }
             recipe.UserId = userId;
             MyResponse response = _recipesService.UpdateRecipe(id, recipe);
-            if (response.isFailed()) 
+            if (response.IsFailed()) 
             {
                 Response.StatusCode = 400;
             }
-                return Content(response._message);
+                return Content(response.Message);
         }
 
         // POST: api/Recipes
@@ -128,11 +129,11 @@ namespace WSEI_aspnet_projekt.Controllers
             }
 
             MyResponse response = _recipesService.DeleteRecipe(id);
-            if (response.isFailed())
+            if (response.IsFailed())
             {
                 Response.StatusCode = 400;
             }
-            return Content(response._message);
+            return Content(response.Message);
         }
 
         private string GetUserId()

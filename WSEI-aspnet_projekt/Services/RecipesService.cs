@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using WSEI_aspnet_projekt.Models;
 using WSEI_aspnet_projekt.Repositories;
@@ -8,8 +12,8 @@ using WSEI_aspnet_projekt.Services;
 
 public class RecipesService : IRecipesService 
 {
-	IRecipesRepository _recipesRepository;
-	IIngredientsRepository _ingredientsRepository;
+	private readonly IRecipesRepository _recipesRepository;
+	private readonly IIngredientsRepository _ingredientsRepository;
 
 	public RecipesService(IRecipesRepository recipesRepository, IIngredientsRepository ingredientsRepository)
 	{
