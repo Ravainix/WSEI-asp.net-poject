@@ -18,5 +18,7 @@ namespace WSEI_aspnet_projekt.Services
 		public List<Recipe> GetUserRecipes(string id);
 		public void AddRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients, string userId);
 		public RecipeWithIngredients GetRecipeWithIngredients(int id);
+		public List<Recipe> GetFavoriteRecipes(string userId);
+		public MyResponse PostFavoriteRecipe(FavoriteRecipe favoriteRecipe);
 	}
 }

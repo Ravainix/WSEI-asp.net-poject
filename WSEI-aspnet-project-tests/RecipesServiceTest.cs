@@ -84,8 +84,8 @@ namespace WSEI_aspnet_project_tests
 			};
 
 			RecipeWithIngredients recipeWithIngredients = new RecipeWithIngredients();
-			recipeWithIngredients.recipe = recipe;
-			recipeWithIngredients.ingredients = ingredients;
+			recipeWithIngredients.Recipe = recipe;
+			recipeWithIngredients.Ingredients = ingredients;
 
 			_recipesService.AddRecipeWithIngredients(recipeWithIngredients, "userId");
 			_ingredientsRepository.Verify(r => r.PostIngredient(It.IsAny<Ingredient>()), Times.Exactly(3));

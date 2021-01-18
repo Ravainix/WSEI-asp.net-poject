@@ -38,14 +38,14 @@ namespace WSEI_aspnet_projekt.Controllers
             return new MyResponse(true, imageGetUrl);
         }
 
-        // POST: api/images/upload
+        // GET: api/images/get{name}
         [HttpGet("images/get/{name}")]
         public ActionResult<string> GetImage(string name)
         {
             return PhysicalFile(_filesService.GetImagePath(name), "image/jpeg");
         }
 
-        public MyResponse ValidateImage(IFormFile imageFile)
+        private MyResponse ValidateImage(IFormFile imageFile)
         {
             MyResponse result = new MyResponse(true);
             if (!allowedImagesExtensions.Contains(imageFile.ContentType))

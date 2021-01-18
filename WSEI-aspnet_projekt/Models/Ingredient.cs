@@ -20,6 +20,6 @@ namespace WSEI_aspnet_projekt.Models
 		[Column(TypeName = "int")]
 		public int RecipeId { get; set; }
 		[Column(TypeName = "float")]
-		public float amount { get; set; }
+		public float Amount { get; set; }
 	}
 }

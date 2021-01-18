@@ -10,7 +10,7 @@ using WSEI_aspnet_projekt.Repositories;
 
 public class RecipesRepository : IRecipesRepository
 {
-	ApplicationDbContext _context;
+	private readonly ApplicationDbContext _context;
 
 	public RecipesRepository(ApplicationDbContext context)
 	{
@@ -57,5 +57,29 @@ public class RecipesRepository : IRecipesRepository
 	{
 		_context.Recipes.Remove(recipe);
 		_context.SaveChanges();
+	}
+
+	public List<Recipe> GetFavoriteRecipes(string userId)
+	{
+		return _context.Recipes
+			.Join(_context.FavoriteRecipes,
+			r => r.Id,
+			f => f.RecipeId,
+			(r, f) => r)
+			.Where(r => r.UserId == userId).ToList();
+	}
+
+	public bool IsRecipeAddedInFavorite(FavoriteRecipe favoriteRecipe)
+	{
+		return _context.FavoriteRecipes
+			.Where(f => f.RecipeId == favoriteRecipe.RecipeId && f.UserId.Equals(favoriteRecipe.UserId))
+			.Any();
+	}
+
+	public void PostFavoriteRecipe(FavoriteRecipe favoriteRecipe)
+	{
+		_context.FavoriteRecipes.Add(favoriteRecipe);
+		_context.SaveChanges();
+		_context.Entry(favoriteRecipe).State = EntityState.Detached;
 	}
 }

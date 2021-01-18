@@ -11,7 +11,7 @@ namespace WSEI_aspnet_projekt.Repositories
 {
 	public class IngredientsRepository : IIngredientsRepository
 	{
-		ApplicationDbContext _context;
+		private readonly ApplicationDbContext _context;
 
 		public IngredientsRepository(ApplicationDbContext context)
 		{

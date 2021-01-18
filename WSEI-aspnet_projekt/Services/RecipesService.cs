@@ -61,12 +61,12 @@ public class RecipesService : IRecipesService
 
 	public void AddRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients, string userId)
 	{
-		Recipe recipe = recipeWithIngredients.recipe;
+		Recipe recipe = recipeWithIngredients.Recipe;
 		recipe.UserId = userId;
 		_recipesRepository.PostRecipe(recipe);
-		foreach (Ingredient ingredient in recipeWithIngredients.ingredients)
+		foreach (Ingredient ingredient in recipeWithIngredients.Ingredients)
 		{
-			ingredient.RecipeId = recipeWithIngredients.recipe.Id;
+			ingredient.RecipeId = recipeWithIngredients.Recipe.Id;
 			_ingredientsRepository.PostIngredient(ingredient);
 		}
 	}
@@ -87,5 +87,36 @@ public class RecipesService : IRecipesService
 		}
 		_recipesRepository.DeleteRecipe(recipe);
 		return new MyResponse(true, "Recipe id = " + recipe.Id + " deleted successfully");
+	}
+
+	public List<Recipe> GetFavoriteRecipes(string userId)
+	{
+		return _recipesRepository.GetFavoriteRecipes(userId);
+	}
+
+	public MyResponse PostFavoriteRecipe(FavoriteRecipe favoriteRecipe)
+	{
+		MyResponse validateResult = ValidatePostFavoriteRecipe(favoriteRecipe);
+		if (validateResult.Success)
+		{
+			_recipesRepository.PostFavoriteRecipe(favoriteRecipe);
+		}
+		return validateResult;
+	}
+
+	private MyResponse ValidatePostFavoriteRecipe(FavoriteRecipe favoriteRecipe)
+	{
+		MyResponse response = new MyResponse(true);
+		if (GetRecipe(favoriteRecipe.RecipeId) == null)
+		{
+			response.Success = false;
+			response.Message = "Recipe with id = " + favoriteRecipe.RecipeId + " doesn't exist";
+		}
+		else if (_recipesRepository.IsRecipeAddedInFavorite(favoriteRecipe))
+		{
+			response.Success = false;
+			response.Message = "Recipe is already added to favorites";
+		}
+		return response;
 	}
 }

@@ -10,7 +10,7 @@ namespace WSEI_aspnet_projekt.Services
 {
 	public class IngredientsService : IIngredientsService
 	{
-		IIngredientsRepository _ingredientsRepository;
+		private readonly IIngredientsRepository _ingredientsRepository;
 
 		public IngredientsService(IIngredientsRepository ingredientsRepository)
 		{

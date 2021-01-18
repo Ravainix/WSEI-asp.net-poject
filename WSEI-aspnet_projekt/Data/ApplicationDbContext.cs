@@ -19,5 +19,14 @@ namespace WSEI_aspnet_projekt.Data
 
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<FavoriteRecipe> FavoriteRecipes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<FavoriteRecipe>()
+                .HasKey(f => new { f.UserId, f.RecipeId });
+        }
     }
 }

@@ -33,14 +33,14 @@ namespace WSEI_aspnet_projekt.Controllers
             return _recipesService.GetUserRecipes(GetUserId());
         }
 
-        // GET: api/Recipes
+        // GET: api/recipes
         [HttpGet("recipes")]
         public List<Recipe> GetRecipes()
         {
             return _recipesService.GetRecipes();
         }
 
-        // GET: api/Recipes/5
+        // GET: api/recipes/5
         [HttpGet("recipes/{id}")]
         public ActionResult<Recipe> GetRecipe(int id)
         {
@@ -53,7 +53,7 @@ namespace WSEI_aspnet_projekt.Controllers
             return recipe;
         }
 
-        // PUT: api/Recipes/5
+        // PUT: api/recipes/5
         [Authorize]
         [HttpPut("recipes/{id}")]
         public ActionResult PutRecipe(int id, [FromBody] Recipe recipe)
@@ -85,7 +85,7 @@ namespace WSEI_aspnet_projekt.Controllers
                 return Content(response.Message);
         }
 
-        // POST: api/Recipes
+        // POST: api/recipes
         [Authorize]
         [HttpPost("recipes")]
         public ActionResult<Recipe> PostRecipe([FromBody] Recipe recipe)
@@ -111,7 +111,7 @@ namespace WSEI_aspnet_projekt.Controllers
             return _recipesService.GetRecipeWithIngredients(id);
         }
 
-        // DELETE: api/Recipes/5
+        // DELETE: api/recipes/5
         [Authorize]
         [HttpDelete("recipes/{id}")]
         public ActionResult<Recipe> DeleteRecipe(int id)
@@ -134,6 +134,22 @@ namespace WSEI_aspnet_projekt.Controllers
                 Response.StatusCode = 400;
             }
             return Content(response.Message);
+        }
+
+        // GET: api/recipes/favorite
+        [Authorize]
+        [HttpGet("recipes/favorite")]
+        public ActionResult<IEnumerable<Recipe>> GetFavoriteRecipes()
+        {
+            return _recipesService.GetFavoriteRecipes(GetUserId());
+        }
+
+        // POST: api/recipes/favorite
+        [Authorize]
+        [HttpPost("recipes/favorite/{recipeId}")]
+        public ActionResult<MyResponse> PostFavoriteRecipe(int recipeId)
+        {
+            return _recipesService.PostFavoriteRecipe(new FavoriteRecipe(GetUserId(), recipeId));
         }
 
         private string GetUserId()
