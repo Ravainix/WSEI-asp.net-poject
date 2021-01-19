@@ -20,5 +20,6 @@ namespace WSEI_aspnet_projekt.Repositories
 		public bool IsFavoriteRecipeAdded(FavoriteRecipe favoriteRecipe);
 		public void PostFavoriteRecipe(FavoriteRecipe favoriteRecipe);
 		public void DeleteFavoriteRecipe(FavoriteRecipe favoriteRecipe);
+		public void DeleteAllFavoriteRecipesForRecipe(int recipeId);
 	}
 }

@@ -36,9 +36,9 @@ public class RecipesService : IRecipesService
 		return _recipesRepository.GetUserRecipes(id);
 	}
 
-	public MyResponse UpdateRecipe(int id, Recipe recipe, string userId)
+	public MyResponse UpdateRecipe(Recipe recipe, string userId)
 	{
-		MyResponse validResult = ValidatePutRecipe(id, recipe, userId);
+		MyResponse validResult = ValidatePutRecipe(recipe, userId);
 		if (validResult.Success)
 		{
 			recipe.UserId = userId;
@@ -47,18 +47,13 @@ public class RecipesService : IRecipesService
 		return validResult;
 	}
 
-	private MyResponse ValidatePutRecipe(int id, Recipe recipe, string userId)
+	private MyResponse ValidatePutRecipe(Recipe recipe, string userId)
 	{
 		MyResponse response = new MyResponse(false);
-		if (id != recipe.Id)
-		{
-			response.Message = "Id in url must be the same as in the body";
-			return response;
-		}
-		Recipe recipeFromDb = GetRecipe(id);
+		Recipe recipeFromDb = GetRecipe(recipe.Id);
 		if (recipeFromDb == null)
 		{
-			response.Message = "Recipe with id = " + id + " doesn't exist";
+			response.Message = "Recipe with id = " + recipe.Id + " doesn't exist";
 		} else if (!recipeFromDb.UserId.Equals(userId))
 		{
 			response.Message = "You are not a creator of that recipe, update rejected";
@@ -86,6 +81,46 @@ public class RecipesService : IRecipesService
 		}
 	}
 
+	public MyResponse UpdateRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients, string userId)
+	{
+		MyResponse updateResult = UpdateRecipe(recipeWithIngredients.Recipe, userId);
+		if (!updateResult.Success)
+		{
+			return updateResult;
+		}
+
+		List<Ingredient> dbIngredients = _ingredientsRepository.GetIngredientsForRecipe(recipeWithIngredients.Recipe.Id);
+
+		UpdateOrAddIngredientsToRecipe(recipeWithIngredients.Ingredients, dbIngredients, recipeWithIngredients.Recipe.Id);
+		DeleteRemainingIngredients(recipeWithIngredients.Ingredients, dbIngredients);
+		return updateResult;
+	}
+
+	private void UpdateOrAddIngredientsToRecipe(Ingredient[] ingredientsFromRequest, List<Ingredient> dbIngredients, int recipeId)
+	{
+		foreach (Ingredient i in ingredientsFromRequest)
+		{
+			i.RecipeId = recipeId;
+			if (dbIngredients.Where(dbI => dbI.Id == i.Id).Any())
+			{
+				_ingredientsRepository.PutIngredient(i);
+			}
+			else
+			{
+				i.Id = 0;
+				_ingredientsRepository.PostIngredient(i);
+			}
+		}
+	}
+
+	private void DeleteRemainingIngredients(Ingredient[] ingredientsFromRequest, List<Ingredient> dbIngredients)
+	{
+		dbIngredients.ForEach(dbI =>
+		{
+			if (!ingredientsFromRequest.Where(i => i.Id == dbI.Id).Any()) _ingredientsRepository.DeleteIngredient(dbI);
+		});
+	}
+
 	public RecipeWithIngredients GetRecipeWithIngredients(int id)
 	{
 		return new RecipeWithIngredients(
@@ -93,15 +128,37 @@ public class RecipesService : IRecipesService
 			_ingredientsRepository.GetIngredientsForRecipe(id).ToArray());
 	}
 
-	public MyResponse DeleteRecipe(int id)
+	public MyResponse DeleteRecipe(int id, string userId)
 	{
 		Recipe recipe = GetRecipe(id);
+		MyResponse validateResult = ValidateDeleteRecipe(recipe, userId);
+		if (!validateResult.Success)
+		{
+			return validateResult;
+		}
+
+		_recipesRepository.DeleteRecipe(recipe);
+		_recipesRepository.DeleteAllFavoriteRecipesForRecipe(recipe.Id);
+		_ingredientsRepository.DeleteIngredienstForRecipe(recipe.Id);
+		return validateResult;
+	}
+
+	private MyResponse ValidateDeleteRecipe(Recipe recipe, string userId)
+	{
+		MyResponse response = new MyResponse(false);
 		if (recipe == null)
 		{
-			return new MyResponse(false, "Recipe with id = " + id + " doesn't exist");
+			response.Message = "Recipe doesn't exist";
 		}
-		_recipesRepository.DeleteRecipe(recipe);
-		return new MyResponse(true);
+		else if (!recipe.UserId.Equals(userId))
+		{
+			response.Message = "You are not a creator of that recipe, delete rejected";
+		}
+		else
+		{
+			response.Success = true;
+		}
+		return response;
 	}
 
 	public List<Recipe> GetFavoriteRecipes(string userId)

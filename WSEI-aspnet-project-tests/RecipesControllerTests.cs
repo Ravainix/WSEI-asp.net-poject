@@ -145,11 +145,11 @@ namespace WSEI_aspnet_project_tests
 			};
 
 			_recipesService.Setup(i => i.GetRecipe(It.IsAny<int>())).Returns(recipe);
-			_recipesService.Setup(i => i.UpdateRecipe(1, recipe, userId)).Returns(new MyResponse(true));
+			_recipesService.Setup(i => i.UpdateRecipe(recipe, userId)).Returns(new MyResponse(true));
 			
-			var result = _recipesController.PutRecipe(1, recipe);
+			var result = _recipesController.PutRecipe(recipe);
 			
-			_recipesService.Verify(i => i.UpdateRecipe(1, recipe, userId), Times.Once);
+			_recipesService.Verify(i => i.UpdateRecipe(recipe, userId), Times.Once);
 			
 			Assert.IsNotNull(result);
 		}
@@ -189,12 +189,12 @@ namespace WSEI_aspnet_project_tests
 				UserId = "user1"
 			};
 			
-			_recipesService.Setup(i => i.DeleteRecipe(1)).Returns(new MyResponse(true));
+			_recipesService.Setup(i => i.DeleteRecipe(1, "user1")).Returns(new MyResponse(true));
 			_recipesService.Setup(i => i.GetRecipe(1)).Returns(recipe);
 
 			var result = _recipesController.DeleteRecipe(1).Result;
 			
-			_recipesService.Verify(i => i.DeleteRecipe(1), Times.Once);
+			_recipesService.Verify(i => i.DeleteRecipe(1, "user1"), Times.Once);
 			
 			Assert.IsInstanceOf<ContentResult>(result);
 		}

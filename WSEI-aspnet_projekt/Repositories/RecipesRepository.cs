@@ -103,4 +103,11 @@ public class RecipesRepository : IRecipesRepository
 		_context.FavoriteRecipes.Remove(favoriteRecipe);
 		_context.SaveChanges();
 	}
+
+	public void DeleteAllFavoriteRecipesForRecipe(int recipeId)
+	{
+		_context.FavoriteRecipes.RemoveRange(
+			_context.FavoriteRecipes.Where(f => f.RecipeId == recipeId));
+		_context.SaveChanges();
+	}
 }

@@ -53,12 +53,12 @@ namespace WSEI_aspnet_projekt.Controllers
             return recipe;
         }
 
-        // PUT: api/recipes/{id}
+        // PUT: api/recipes
         [Authorize]
-        [HttpPut("recipes/{id}")]
-        public ActionResult<MyResponse> PutRecipe(int id, [FromBody] Recipe recipe)
+        [HttpPut("recipes")]
+        public ActionResult<MyResponse> PutRecipe([FromBody] Recipe recipe)
         {
-            MyResponse response = _recipesService.UpdateRecipe(id, recipe, GetUserId());
+            MyResponse response = _recipesService.UpdateRecipe(recipe, GetUserId());
             if (!response.Success)
             {
                 Response.StatusCode = 400;
@@ -85,6 +85,14 @@ namespace WSEI_aspnet_projekt.Controllers
             return Content("Recipe added succesfully");
         }
 
+        // PUT: api/recipesWithIngredients
+        [Authorize]
+        [HttpPut("recipesWithIngredients")]
+        public ActionResult<MyResponse> PutRecipeWithIngredients([FromBody] RecipeWithIngredients recipeWithIngredients)
+        {
+            return _recipesService.UpdateRecipeWithIngredients(recipeWithIngredients, GetUserId());
+        }
+
         // GET: api/recipesWithIngredients/{id}
         [HttpGet("recipesWithIngredients/{id}")]
         public RecipeWithIngredients GetRecipeWithIngredients(int id)
@@ -95,26 +103,9 @@ namespace WSEI_aspnet_projekt.Controllers
         // DELETE: api/recipes/{id}
         [Authorize]
         [HttpDelete("recipes/{id}")]
-        public ActionResult<Recipe> DeleteRecipe(int id)
+        public ActionResult<MyResponse> DeleteRecipe(int id)
         {
-            Recipe recipeFromDb = _recipesService.GetRecipe(id);
-            if (recipeFromDb == null)
-            {
-                Response.StatusCode = 400;
-                return Content("Recipe with id = " + id + " doesn't exist");
-            }
-            else if (recipeFromDb.UserId != GetUserId())
-            {
-                Response.StatusCode = 400;
-                return Content("You are not a creator of that recipe, delete rejected");
-            }
-
-            MyResponse response = _recipesService.DeleteRecipe(id);
-            if (response.IsFailed())
-            {
-                Response.StatusCode = 400;
-            }
-            return Content(response.Message);
+            return _recipesService.DeleteRecipe(id, GetUserId());
         }
 
         // GET: api/recipes/favorite
