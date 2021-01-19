@@ -40,7 +40,7 @@ namespace WSEI_aspnet_projekt.Controllers
             return _recipesService.GetRecipes();
         }
 
-        // GET: api/recipes/5
+        // GET: api/recipes/{id}
         [HttpGet("recipes/{id}")]
         public ActionResult<Recipe> GetRecipe(int id)
         {
@@ -53,36 +53,17 @@ namespace WSEI_aspnet_projekt.Controllers
             return recipe;
         }
 
-        // PUT: api/recipes/5
+        // PUT: api/recipes/{id}
         [Authorize]
         [HttpPut("recipes/{id}")]
-        public ActionResult PutRecipe(int id, [FromBody] Recipe recipe)
+        public ActionResult<MyResponse> PutRecipe(int id, [FromBody] Recipe recipe)
         {
-            if (id != recipe.Id)
-            {
-                Response.StatusCode = 400;
-                return Content("Id in url must be the same as in the body");
-            }
-
-            string userId = GetUserId();
-            Recipe recipeFromDb = _recipesService.GetRecipe(id);
-            if (recipeFromDb == null)
-            {
-                Response.StatusCode = 400;
-                return Content("Recipe with id = " + recipe.Id + " doesn't exist");
-            }
-            else if (recipeFromDb.UserId != userId)
-            {
-                Response.StatusCode = 400;
-                return Content("You are not a creator of that recipe, update rejected");
-            }
-            recipe.UserId = userId;
-            MyResponse response = _recipesService.UpdateRecipe(id, recipe);
-            if (response.IsFailed()) 
+            MyResponse response = _recipesService.UpdateRecipe(id, recipe, GetUserId());
+            if (!response.Success)
             {
                 Response.StatusCode = 400;
             }
-                return Content(response.Message);
+            return response;
         }
 
         // POST: api/recipes
@@ -104,14 +85,14 @@ namespace WSEI_aspnet_projekt.Controllers
             return Content("Recipe added succesfully");
         }
 
-        // GET: api/recipesWithIngredients
+        // GET: api/recipesWithIngredients/{id}
         [HttpGet("recipesWithIngredients/{id}")]
         public RecipeWithIngredients GetRecipeWithIngredients(int id)
         {
             return _recipesService.GetRecipeWithIngredients(id);
         }
 
-        // DELETE: api/recipes/5
+        // DELETE: api/recipes/{id}
         [Authorize]
         [HttpDelete("recipes/{id}")]
         public ActionResult<Recipe> DeleteRecipe(int id)
@@ -144,12 +125,20 @@ namespace WSEI_aspnet_projekt.Controllers
             return _recipesService.GetFavoriteRecipes(GetUserId());
         }
 
-        // POST: api/recipes/favorite
+        // POST: api/recipes/favorite/{recipeId}
         [Authorize]
         [HttpPost("recipes/favorite/{recipeId}")]
         public ActionResult<MyResponse> PostFavoriteRecipe(int recipeId)
         {
             return _recipesService.PostFavoriteRecipe(new FavoriteRecipe(GetUserId(), recipeId));
+        }
+
+        // DELETE: api/recipes/favorite/{recipeId}
+        [Authorize]
+        [HttpDelete("recipes/favorite/{recipeId}")]
+        public ActionResult<MyResponse> DeleteFavoriteRecipe(int recipeId)
+        {
+            return _recipesService.DeleteFavoriteRecipe(new FavoriteRecipe(GetUserId(), recipeId));
         }
 
         private string GetUserId()

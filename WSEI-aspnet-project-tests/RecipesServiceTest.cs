@@ -47,7 +47,8 @@ namespace WSEI_aspnet_project_tests
 		public void UpdateRecipeShouldSuccessAndForSecondTryFails()
 		{
 			recipe = new Recipe();
-			MyResponse resultResponse = _recipesService.UpdateRecipe(2, recipe);
+			string userId = "";
+			MyResponse resultResponse = _recipesService.UpdateRecipe(2, recipe, userId);
 			MyResponse expectedResponse = new MyResponse(true, "Recipe updated successfully");
 
 			Assert.AreEqual(resultResponse.Message, expectedResponse.Message);
@@ -55,7 +56,7 @@ namespace WSEI_aspnet_project_tests
 			_recipesRepository.Verify(r => r.GetRecipe(2), Times.Never);
 			
 			_recipesRepository.Setup(r => r.PutRecipe(It.IsAny<Recipe>())).Throws(new IOException());
-			resultResponse = _recipesService.UpdateRecipe(2, recipe);
+			resultResponse = _recipesService.UpdateRecipe(2, recipe, userId);
 			expectedResponse = new MyResponse(false, "Recipe with id = " + recipe.Id + " doesn't exist");
 
 			Assert.AreEqual(resultResponse.Message, expectedResponse.Message);

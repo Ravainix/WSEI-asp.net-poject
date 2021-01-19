@@ -137,18 +137,19 @@ namespace WSEI_aspnet_project_tests
 		[Test]
 		public void PutRecipeTest()
 		{
+			string userId = "user1";
 			var recipe = new Recipe()
 			{
 				Id = 1,
-				UserId = "user1"
+				UserId = userId
 			};
 
 			_recipesService.Setup(i => i.GetRecipe(It.IsAny<int>())).Returns(recipe);
-			_recipesService.Setup(i => i.UpdateRecipe(1, recipe)).Returns(new MyResponse(true));
+			_recipesService.Setup(i => i.UpdateRecipe(1, recipe, userId)).Returns(new MyResponse(true));
 			
 			var result = _recipesController.PutRecipe(1, recipe);
 			
-			_recipesService.Verify(i => i.UpdateRecipe(1, recipe), Times.Once);
+			_recipesService.Verify(i => i.UpdateRecipe(1, recipe, userId), Times.Once);
 			
 			Assert.IsNotNull(result);
 		}

@@ -29,7 +29,12 @@ public class RecipesRepository : IRecipesRepository
 
 	public Recipe GetRecipe(int id)
 	{
-		return _context.Recipes.Find(id);
+		Recipe recipe = _context.Recipes.Find(id);
+		if (recipe != null)
+		{
+			_context.Entry(recipe).State = EntityState.Detached;
+		}
+		return recipe;
 	}
 
 	public void PutRecipe(Recipe recipe)
@@ -41,9 +46,18 @@ public class RecipesRepository : IRecipesRepository
 		}
 		catch (DbUpdateConcurrencyException)
 		{
-			_context.Entry(recipe).State = EntityState.Detached;
 			throw;
+		} finally
+		{
+			_context.Entry(recipe).State = EntityState.Detached;
 		}
+	}
+
+	public bool IsRecipeExists(int id)
+	{
+		return _context.Recipes
+			.Where(r => r.Id == id)
+			.Any();
 	}
 
 	public void PostRecipe(Recipe recipe)
@@ -65,11 +79,12 @@ public class RecipesRepository : IRecipesRepository
 			.Join(_context.FavoriteRecipes,
 			r => r.Id,
 			f => f.RecipeId,
-			(r, f) => r)
-			.Where(r => r.UserId == userId).ToList();
+			(r, f) => new { r, f })
+			.Where(o => o.f.UserId.Equals(userId))
+			.Select(o => o.r).ToList();
 	}
 
-	public bool IsRecipeAddedInFavorite(FavoriteRecipe favoriteRecipe)
+	public bool IsFavoriteRecipeAdded(FavoriteRecipe favoriteRecipe)
 	{
 		return _context.FavoriteRecipes
 			.Where(f => f.RecipeId == favoriteRecipe.RecipeId && f.UserId.Equals(favoriteRecipe.UserId))
@@ -81,5 +96,11 @@ public class RecipesRepository : IRecipesRepository
 		_context.FavoriteRecipes.Add(favoriteRecipe);
 		_context.SaveChanges();
 		_context.Entry(favoriteRecipe).State = EntityState.Detached;
+	}
+
+	public void DeleteFavoriteRecipe(FavoriteRecipe favoriteRecipe)
+	{
+		_context.FavoriteRecipes.Remove(favoriteRecipe);
+		_context.SaveChanges();
 	}
 }

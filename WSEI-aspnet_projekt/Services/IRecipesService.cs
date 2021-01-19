@@ -12,7 +12,7 @@ namespace WSEI_aspnet_projekt.Services
 	{
 		public List<Recipe> GetRecipes();
 		public Recipe GetRecipe(int id);
-		public MyResponse UpdateRecipe(int id, Recipe recipe);
+		public MyResponse UpdateRecipe(int id, Recipe recipe, string userId);
 		public void AddRecipe(Recipe recipe);
 		public MyResponse DeleteRecipe(int id);
 		public List<Recipe> GetUserRecipes(string id);
@@ -20,5 +20,6 @@ namespace WSEI_aspnet_projekt.Services
 		public RecipeWithIngredients GetRecipeWithIngredients(int id);
 		public List<Recipe> GetFavoriteRecipes(string userId);
 		public MyResponse PostFavoriteRecipe(FavoriteRecipe favoriteRecipe);
+		public MyResponse DeleteFavoriteRecipe(FavoriteRecipe favoriteRecipe);
 	}
 }

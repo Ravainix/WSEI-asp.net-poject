@@ -36,22 +36,37 @@ public class RecipesService : IRecipesService
 		return _recipesRepository.GetUserRecipes(id);
 	}
 
-	public MyResponse UpdateRecipe(int id, Recipe recipe)
+	public MyResponse UpdateRecipe(int id, Recipe recipe, string userId)
 	{
-		try
+		MyResponse validResult = ValidatePutRecipe(id, recipe, userId);
+		if (validResult.Success)
 		{
+			recipe.UserId = userId;
 			_recipesRepository.PutRecipe(recipe);
-			return new MyResponse(true, "Recipe updated successfully");
 		}
-		catch
+		return validResult;
+	}
+
+	private MyResponse ValidatePutRecipe(int id, Recipe recipe, string userId)
+	{
+		MyResponse response = new MyResponse(false);
+		if (id != recipe.Id)
 		{
-			if (GetRecipe(id) == null)
-			{
-				return new MyResponse(false, "Recipe with id = " + recipe.Id + " doesn't exist");
-			}
-			return new MyResponse(false, "Unexpected error");
+			response.Message = "Id in url must be the same as in the body";
+			return response;
 		}
-		
+		Recipe recipeFromDb = GetRecipe(id);
+		if (recipeFromDb == null)
+		{
+			response.Message = "Recipe with id = " + id + " doesn't exist";
+		} else if (!recipeFromDb.UserId.Equals(userId))
+		{
+			response.Message = "You are not a creator of that recipe, update rejected";
+		} else
+		{
+			response.Success = true;
+		}
+		return response;
 	}
 
 	public void AddRecipe(Recipe recipe)
@@ -86,7 +101,7 @@ public class RecipesService : IRecipesService
 			return new MyResponse(false, "Recipe with id = " + id + " doesn't exist");
 		}
 		_recipesRepository.DeleteRecipe(recipe);
-		return new MyResponse(true, "Recipe id = " + recipe.Id + " deleted successfully");
+		return new MyResponse(true);
 	}
 
 	public List<Recipe> GetFavoriteRecipes(string userId)
@@ -106,16 +121,38 @@ public class RecipesService : IRecipesService
 
 	private MyResponse ValidatePostFavoriteRecipe(FavoriteRecipe favoriteRecipe)
 	{
-		MyResponse response = new MyResponse(true);
+		MyResponse response = new MyResponse(false);
 		if (GetRecipe(favoriteRecipe.RecipeId) == null)
 		{
-			response.Success = false;
 			response.Message = "Recipe with id = " + favoriteRecipe.RecipeId + " doesn't exist";
 		}
-		else if (_recipesRepository.IsRecipeAddedInFavorite(favoriteRecipe))
+		else if (_recipesRepository.IsFavoriteRecipeAdded(favoriteRecipe))
+		{
+			response.Message = "Recipe is already added to favorites";
+		} else
+		{
+			response.Success = true;
+		}
+		return response;
+	}
+
+	public MyResponse DeleteFavoriteRecipe(FavoriteRecipe favoriteRecipe)
+	{
+		MyResponse validateResult = ValidateDeleteFavoriteRecipe(favoriteRecipe);
+		if (validateResult.Success)
+		{
+			_recipesRepository.DeleteFavoriteRecipe(favoriteRecipe);
+		}
+		return validateResult;
+	}
+
+	private MyResponse ValidateDeleteFavoriteRecipe(FavoriteRecipe favoriteRecipe)
+	{
+		MyResponse response = new MyResponse(true);
+		if (!_recipesRepository.IsFavoriteRecipeAdded(favoriteRecipe))
 		{
 			response.Success = false;
-			response.Message = "Recipe is already added to favorites";
+			response.Message = "Can't delete - recipe is not added to favorites";
 		}
 		return response;
 	}
