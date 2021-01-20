@@ -9,13 +9,13 @@ namespace WSEI_aspnet_projekt.Models
 	{
 		public RecipeWithIngredients(Recipe recipe, Ingredient[] ingredients) 
 		{
-			this.recipe = recipe;
-			this.ingredients = ingredients;
+			Recipe = recipe;
+			Ingredients = ingredients;
 		}
 
 		public RecipeWithIngredients() { }
 
-		public Recipe recipe { get; set; }
-		public Ingredient[] ingredients { get; set; }
+		public Recipe Recipe { get; set; }
+		public Ingredient[] Ingredients { get; set; }
 	}
 }

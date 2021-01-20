@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Hosting;
 using Moq;
 using NUnit.Framework;
 using System.IO;
@@ -12,8 +13,8 @@ namespace WSEI_aspnet_project_tests
 	{
 		private IRecipesService _recipesService;
 		private Recipe recipe;
-		private Mock<IRecipesRepository> _recipesRepository = new Mock<IRecipesRepository>();
-		private Mock<IIngredientsRepository> _ingredientsRepository = new Mock<IIngredientsRepository>();
+		private readonly Mock<IRecipesRepository> _recipesRepository = new Mock<IRecipesRepository>();
+		private readonly Mock<IIngredientsRepository> _ingredientsRepository = new Mock<IIngredientsRepository>();
 
 		[OneTimeSetUp]
 		public void Setup()
@@ -46,19 +47,20 @@ namespace WSEI_aspnet_project_tests
 		public void UpdateRecipeShouldSuccessAndForSecondTryFails()
 		{
 			recipe = new Recipe();
-			MyResponse resultResponse = _recipesService.UpdateRecipe(2, recipe);
+			string userId = "";
+			MyResponse resultResponse = _recipesService.UpdateRecipe(recipe, userId);
 			MyResponse expectedResponse = new MyResponse(true, "Recipe updated successfully");
 
-			Assert.AreEqual(resultResponse._message, expectedResponse._message);
-			Assert.AreEqual(resultResponse._success, expectedResponse._success);
+			Assert.AreEqual(resultResponse.Message, expectedResponse.Message);
+			Assert.AreEqual(resultResponse.Success, expectedResponse.Success);
 			_recipesRepository.Verify(r => r.GetRecipe(2), Times.Never);
 			
 			_recipesRepository.Setup(r => r.PutRecipe(It.IsAny<Recipe>())).Throws(new IOException());
-			resultResponse = _recipesService.UpdateRecipe(2, recipe);
+			resultResponse = _recipesService.UpdateRecipe(recipe, userId);
 			expectedResponse = new MyResponse(false, "Recipe with id = " + recipe.Id + " doesn't exist");
 
-			Assert.AreEqual(resultResponse._message, expectedResponse._message);
-			Assert.AreEqual(resultResponse._success, expectedResponse._success);
+			Assert.AreEqual(resultResponse.Message, expectedResponse.Message);
+			Assert.AreEqual(resultResponse.Success, expectedResponse.Success);
 			_recipesRepository.Verify(r => r.GetRecipe(2), Times.Once);
 		}
 
@@ -83,8 +85,8 @@ namespace WSEI_aspnet_project_tests
 			};
 
 			RecipeWithIngredients recipeWithIngredients = new RecipeWithIngredients();
-			recipeWithIngredients.recipe = recipe;
-			recipeWithIngredients.ingredients = ingredients;
+			recipeWithIngredients.Recipe = recipe;
+			recipeWithIngredients.Ingredients = ingredients;
 
 			_recipesService.AddRecipeWithIngredients(recipeWithIngredients, "userId");
 			_ingredientsRepository.Verify(r => r.PostIngredient(It.IsAny<Ingredient>()), Times.Exactly(3));
@@ -100,8 +102,8 @@ namespace WSEI_aspnet_project_tests
 			MyResponse resultResponse = _recipesService.DeleteRecipe(8);
 			MyResponse expectedResponse = new MyResponse(false, "Recipe with id = " + 8 + " doesn't exist");
 
-			Assert.AreEqual(resultResponse._message, expectedResponse._message);
-			Assert.AreEqual(resultResponse._success, expectedResponse._success);
+			Assert.AreEqual(resultResponse.Message, expectedResponse.Message);
+			Assert.AreEqual(resultResponse.Success, expectedResponse.Success);
 			_recipesRepository.Verify(r => r.GetRecipe(8), Times.Once);
 			_recipesRepository.Verify(r => r.DeleteRecipe(recipe), Times.Never);
 		}
@@ -116,8 +118,8 @@ namespace WSEI_aspnet_project_tests
 			MyResponse resultResponse = _recipesService.DeleteRecipe(10);
 			MyResponse expectedResponse = new MyResponse(true, "Recipe id = " + recipe.Id + " deleted successfully");
 
-			Assert.AreEqual(resultResponse._message, expectedResponse._message);
-			Assert.AreEqual(resultResponse._success, expectedResponse._success);
+			Assert.AreEqual(resultResponse.Message, expectedResponse.Message);
+			Assert.AreEqual(resultResponse.Success, expectedResponse.Success);
 			_recipesRepository.Verify(r => r.GetRecipe(10), Times.Once);
 			_recipesRepository.Verify(r => r.DeleteRecipe(It.IsAny<Recipe>()), Times.Once);
 		}

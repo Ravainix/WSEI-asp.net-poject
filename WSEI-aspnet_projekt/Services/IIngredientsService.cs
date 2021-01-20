@@ -11,8 +11,8 @@ namespace WSEI_aspnet_projekt.Services
 	{
 		public List<Ingredient> GetIngredients();
 		public Ingredient GetIngredient(int id);
-		public MyResponse UpdateIngredient(int id, Ingredient ingredient);
-		public void AddIngredient(Ingredient ingredient);
-		public MyResponse DeleteIngredient(int id);
+		public MyResponse UpdateIngredient(Ingredient ingredient, string userId);
+		public MyResponse AddIngredient(Ingredient ingredient, string userId);
+		public MyResponse DeleteIngredient(int id, string userId);
 	}
 }

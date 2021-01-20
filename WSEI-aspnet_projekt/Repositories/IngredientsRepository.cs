@@ -11,7 +11,7 @@ namespace WSEI_aspnet_projekt.Repositories
 {
 	public class IngredientsRepository : IIngredientsRepository
 	{
-		ApplicationDbContext _context;
+		private readonly ApplicationDbContext _context;
 
 		public IngredientsRepository(ApplicationDbContext context)
 		{
@@ -28,9 +28,9 @@ namespace WSEI_aspnet_projekt.Repositories
 			return _context.Ingredients.ToList();
 		}
 
-		public List<Ingredient> GetIngredientsForRecipe(int id)
+		public List<Ingredient> GetIngredientsForRecipe(int recipeId)
 		{
-			return _context.Ingredients.Where(i => i.RecipeId == id).ToList();
+			return _context.Ingredients.Where(i => i.RecipeId == recipeId).AsNoTracking().ToList();
 		}
 
 		public void PostIngredient(Ingredient ingredient)
@@ -58,6 +58,18 @@ namespace WSEI_aspnet_projekt.Repositories
 		{
 			_context.Ingredients.Remove(ingredient);
 			_context.SaveChanges();
+		}
+
+		public void DeleteIngredienstForRecipe(int recipeId)
+		{
+			_context.Ingredients.RemoveRange(
+				_context.Ingredients.Where(i => i.RecipeId == recipeId));
+			_context.SaveChanges();
+		}
+
+		public bool IsIngredientExists(int id)
+		{
+			return _context.Ingredients.Where(i => i.Id == id).Any();
 		}
 	}
 }

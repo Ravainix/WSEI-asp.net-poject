@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -27,6 +30,12 @@ namespace WSEI_aspnet_projekt.Models
 		public string Image { get; set; }
 		[Column(TypeName = "text")]
 		public string Instruction { get; set; }
+		[Column(TypeName = "tinyint")]
+		public short Portions { get; set; }
+		[Column(TypeName = "int")]
+		public int PrepareTime { get; set; }
+		[Column(TypeName = "nvarchar(30)")]
+		public RecipeDifficulty Difficulty { get; set; }
 	}
 }
  

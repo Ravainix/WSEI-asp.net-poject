@@ -7,27 +7,32 @@ namespace WSEI_aspnet_projekt.Models
 {
 	public class MyResponse
 	{
-		public bool _success { get; set; }
-		public string _message { get; set; }
+		public bool Success { get; set; }
+		public string Message { get; set; }
 
 		public MyResponse(bool success, string message)
 		{
-			_success = success;
-			_message = message;
+			this.Success = success;
+			this.Message = message;
 		}
 
 		public MyResponse(bool success)
 		{
-			_success = success;
+			this.Success = success;
 		}
 
-		public bool isSuccess()
+		public bool IsSuccess()
 		{
-			return _success;
+			return Success;
 		}
-		public bool isFailed()
+		public bool IsFailed()
 		{
-			return !_success;
+			return !Success;
+		}
+
+		public override string ToString()
+		{
+			return "{\"success\": \"" + Success + "\", \"message\": \"" + Message + "\"}";
 		}
 	}
 }

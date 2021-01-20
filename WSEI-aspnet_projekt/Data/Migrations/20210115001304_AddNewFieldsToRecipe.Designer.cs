@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WSEI_aspnet_projekt.Data;
 
 namespace WSEI_aspnet_projekt.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210115001304_AddNewFieldsToRecipe")]
+    partial class AddNewFieldsToRecipe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -301,19 +303,6 @@ namespace WSEI_aspnet_projekt.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("WSEI_aspnet_projekt.Models.FavoriteRecipe", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("RecipeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "RecipeId");
-
-                    b.ToTable("FavoriteRecipes");
-                });
-
             modelBuilder.Entity("WSEI_aspnet_projekt.Models.Ingredient", b =>
                 {
                     b.Property<int>("Id")
@@ -321,15 +310,15 @@ namespace WSEI_aspnet_projekt.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("RecipeId")
                         .HasColumnType("int");
+
+                    b.Property<double>("amount")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
