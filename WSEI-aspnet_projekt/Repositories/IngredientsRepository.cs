@@ -66,5 +66,10 @@ namespace WSEI_aspnet_projekt.Repositories
 				_context.Ingredients.Where(i => i.RecipeId == recipeId));
 			_context.SaveChanges();
 		}
+
+		public bool IsIngredientExists(int id)
+		{
+			return _context.Ingredients.Where(i => i.Id == id).Any();
+		}
 	}
 }

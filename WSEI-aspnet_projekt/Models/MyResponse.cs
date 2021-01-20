@@ -29,5 +29,10 @@ namespace WSEI_aspnet_projekt.Models
 		{
 			return !Success;
 		}
+
+		public override string ToString()
+		{
+			return "{\"success\": \"" + Success + "\", \"message\": \"" + Message + "\"}";
+		}
 	}
 }

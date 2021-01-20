@@ -48,7 +48,7 @@ namespace WSEI_aspnet_projekt.Controllers
             if (recipe == null)
             {
                 Response.StatusCode = 400;
-                return Content("Recipe with id = " + id + " doesn't exist"); 
+                return Content(new MyResponse(false, "Recipe with id = " + id + " doesn't exist").ToString(), "application /json");
             }
             return recipe;
         }
@@ -59,7 +59,7 @@ namespace WSEI_aspnet_projekt.Controllers
         public ActionResult<MyResponse> PutRecipe([FromBody] Recipe recipe)
         {
             MyResponse response = _recipesService.UpdateRecipe(recipe, GetUserId());
-            if (!response.Success)
+            if (response.IsFailed())
             {
                 Response.StatusCode = 400;
             }
@@ -82,7 +82,7 @@ namespace WSEI_aspnet_projekt.Controllers
         public ActionResult<Recipe> PostRecipeWithIngredients([FromBody] RecipeWithIngredients recipeWithIngredients)
         {
             _recipesService.AddRecipeWithIngredients(recipeWithIngredients, GetUserId());
-            return Content("Recipe added succesfully");
+            return Content(new MyResponse(true, "Recipe added succesfully").ToString(), "application /json");
         }
 
         // PUT: api/recipesWithIngredients

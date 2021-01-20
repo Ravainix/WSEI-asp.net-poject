@@ -39,7 +39,7 @@ public class RecipesService : IRecipesService
 	public MyResponse UpdateRecipe(Recipe recipe, string userId)
 	{
 		MyResponse validResult = ValidatePutRecipe(recipe, userId);
-		if (validResult.Success)
+		if (validResult.IsSuccess())
 		{
 			recipe.UserId = userId;
 			_recipesRepository.PutRecipe(recipe);
@@ -84,7 +84,7 @@ public class RecipesService : IRecipesService
 	public MyResponse UpdateRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients, string userId)
 	{
 		MyResponse updateResult = UpdateRecipe(recipeWithIngredients.Recipe, userId);
-		if (!updateResult.Success)
+		if (updateResult.IsFailed())
 		{
 			return updateResult;
 		}
@@ -132,7 +132,7 @@ public class RecipesService : IRecipesService
 	{
 		Recipe recipe = GetRecipe(id);
 		MyResponse validateResult = ValidateDeleteRecipe(recipe, userId);
-		if (!validateResult.Success)
+		if (validateResult.IsFailed())
 		{
 			return validateResult;
 		}
@@ -169,7 +169,7 @@ public class RecipesService : IRecipesService
 	public MyResponse PostFavoriteRecipe(FavoriteRecipe favoriteRecipe)
 	{
 		MyResponse validateResult = ValidatePostFavoriteRecipe(favoriteRecipe);
-		if (validateResult.Success)
+		if (validateResult.IsSuccess())
 		{
 			_recipesRepository.PostFavoriteRecipe(favoriteRecipe);
 		}
@@ -196,7 +196,7 @@ public class RecipesService : IRecipesService
 	public MyResponse DeleteFavoriteRecipe(FavoriteRecipe favoriteRecipe)
 	{
 		MyResponse validateResult = ValidateDeleteFavoriteRecipe(favoriteRecipe);
-		if (validateResult.Success)
+		if (validateResult.IsSuccess())
 		{
 			_recipesRepository.DeleteFavoriteRecipe(favoriteRecipe);
 		}
