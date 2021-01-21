@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WSEI_aspnet_projekt.Data;
 
 namespace WSEI_aspnet_projekt.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210120214818_AddRelations")]
+    partial class AddRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -382,171 +384,6 @@ namespace WSEI_aspnet_projekt.Data.Migrations
                     b.ToTable("Recipes");
                 });
 
-            modelBuilder.Entity("WSEI_aspnet_projekt.Models.RecipeCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentId");
-
-                    b.ToTable("RecipeCategories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Dania główne"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Zupy"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Napoje / koktajle"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Śniadania i kolacje"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Fast Food"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Słodkości"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Przekąski"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Sałatki"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Mięsne",
-                            ParentId = 1
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Rybne",
-                            ParentId = 1
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Wegetariańskie",
-                            ParentId = 1
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Krem",
-                            ParentId = 2
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "Klasyczne",
-                            ParentId = 2
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Name = "Alkoholowe",
-                            ParentId = 3
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Name = "Bezalkoholowe",
-                            ParentId = 3
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Name = "Słodkie",
-                            ParentId = 4
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Name = "Słone",
-                            ParentId = 4
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Name = "Ciastka",
-                            ParentId = 6
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Name = "Desery",
-                            ParentId = 6
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Name = "Słodkie",
-                            ParentId = 7
-                        },
-                        new
-                        {
-                            Id = 21,
-                            Name = "Słone",
-                            ParentId = 7
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Name = "Z mięsem",
-                            ParentId = 8
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Name = "Z rybą",
-                            ParentId = 8
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Name = "Z nabiałem",
-                            ParentId = 8
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Name = "Vege",
-                            ParentId = 8
-                        });
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -620,13 +457,6 @@ namespace WSEI_aspnet_projekt.Data.Migrations
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("WSEI_aspnet_projekt.Models.RecipeCategory", b =>
-                {
-                    b.HasOne("WSEI_aspnet_projekt.Models.RecipeCategory", "Parent")
-                        .WithMany("Children")
-                        .HasForeignKey("ParentId");
                 });
 #pragma warning restore 612, 618
         }

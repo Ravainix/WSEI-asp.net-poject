@@ -13,26 +13,28 @@ namespace WSEI_aspnet_project_tests
 {
 	class IngredientsControllerTest
 	{
-		private Mock<IIngredientsService> _ingredientsService = new Mock<IIngredientsService>();
-		private Mock<IRecipesService> _recipesService = new Mock<IRecipesService>();
-		private Mock<IngredientsController> _ingredientsControllerMock = new Mock<IngredientsController>();
+		private readonly Mock<IIngredientsService> _ingredientsService = new Mock<IIngredientsService>();
 		private IngredientsController _ingredientsController;
 		[OneTimeSetUp]
 		public void Setup()
 		{
-			_ingredientsController = new IngredientsController(_ingredientsService.Object, _recipesService.Object);
+			_ingredientsController = new IngredientsController(_ingredientsService.Object);
 		}
 
 		[Test]
 		public void GetIngredientsTest()
 		{
 			List<Ingredient> expectedList = new List<Ingredient>();
-			Ingredient ingredient1 = new Ingredient();
-			ingredient1.Id = 1;
-			ingredient1.Name = "Name1";
-			Ingredient ingredient2 = new Ingredient();
-			ingredient2.Id = 2;
-			ingredient2.Name = "Name2";
+			Ingredient ingredient1 = new Ingredient
+			{
+				Id = 1,
+				Name = "Name1"
+			};
+			Ingredient ingredient2 = new Ingredient
+			{
+				Id = 2,
+				Name = "Name2"
+			};
 			expectedList.Add(ingredient1);
 			expectedList.Add(ingredient2);
 			_ingredientsService.Setup(i => i.GetIngredients()).Returns(expectedList);
@@ -57,13 +59,13 @@ namespace WSEI_aspnet_project_tests
 		[Test]
 		public void PostIngredientTest()
 		{
-			_ingredientsService.Setup(i => i.AddIngredient(It.IsAny<Ingredient>()))
+			_ingredientsService.Setup(i => i.AddIngredient(It.IsAny<Ingredient>(), "userId"))
 				.Verifiable();
 			Ingredient ingredient = new Ingredient();
 			ingredient.Id = 1;
 
 			_ingredientsController.PostIngredient(ingredient);
-			_ingredientsService.Verify(i => i.AddIngredient(It.IsAny<Ingredient>()), Times.Once);
+			_ingredientsService.Verify(i => i.AddIngredient(It.IsAny<Ingredient>(), "userId"), Times.Once);
 		}
 
 

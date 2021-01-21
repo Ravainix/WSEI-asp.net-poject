@@ -99,7 +99,7 @@ namespace WSEI_aspnet_project_tests
 			recipe = null;
 			_recipesRepository.Setup(r => r.GetRecipe(8)).Returns(recipe);
 
-			MyResponse resultResponse = _recipesService.DeleteRecipe(8);
+			MyResponse resultResponse = _recipesService.DeleteRecipe(8, "userId");
 			MyResponse expectedResponse = new MyResponse(false, "Recipe with id = " + 8 + " doesn't exist");
 
 			Assert.AreEqual(resultResponse.Message, expectedResponse.Message);
@@ -115,7 +115,7 @@ namespace WSEI_aspnet_project_tests
 			recipe.Id = 10;
 			_recipesRepository.Setup(r => r.GetRecipe(10)).Returns(recipe);
 
-			MyResponse resultResponse = _recipesService.DeleteRecipe(10);
+			MyResponse resultResponse = _recipesService.DeleteRecipe(10, "userId");
 			MyResponse expectedResponse = new MyResponse(true, "Recipe id = " + recipe.Id + " deleted successfully");
 
 			Assert.AreEqual(resultResponse.Message, expectedResponse.Message);

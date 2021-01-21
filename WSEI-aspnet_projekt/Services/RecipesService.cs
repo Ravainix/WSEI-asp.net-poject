@@ -138,8 +138,6 @@ public class RecipesService : IRecipesService
 		}
 
 		_recipesRepository.DeleteRecipe(recipe);
-		_recipesRepository.DeleteAllFavoriteRecipesForRecipe(recipe.Id);
-		_ingredientsRepository.DeleteIngredienstForRecipe(recipe.Id);
 		return validateResult;
 	}
 

@@ -7,20 +7,18 @@ using System.Threading.Tasks;
 
 namespace WSEI_aspnet_projekt.Models
 {
-	public class Ingredient
+	public class RecipeCategory
 	{
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column(TypeName = "int")]
-		public int Id {get; set;}
+		public int Id { get; set; }
 		[Required]
 		[Column(TypeName = "nvarchar(100)")]
 		public string Name { get; set; }
-		[Required]
 		[Column(TypeName = "int")]
-		[ForeignKey("RecipeId")]
-		public int RecipeId { get; set; }
-		[Column(TypeName = "float")]
-		public float Amount { get; set; }
+		public int? ParentId { get; set; }
+		public virtual RecipeCategory Parent { get; set; }
+		public virtual ICollection<RecipeCategory> Children { get; set; }
 	}
 }

@@ -10,18 +10,19 @@ namespace WSEI_aspnet_project_tests
 	class IngredientsServiceTest
 	{
 		private IIngredientsService _ingredientsService;
+		private readonly Mock<IRecipesService> _recipesService = new Mock<IRecipesService>();
 		private readonly Mock<IIngredientsRepository> _ingredientsRepository = new Mock<IIngredientsRepository>();
 
 		[OneTimeSetUp]
 		public void Setup()
 		{
-			_ingredientsService = new IngredientsService(_ingredientsRepository.Object);
+			_ingredientsService = new IngredientsService(_ingredientsRepository.Object, _recipesService.Object);
 		}
 
 		[Test]
 		public void AddIngredientTest()
 		{
-			_ingredientsService.AddIngredient(It.IsAny<Ingredient>());
+			_ingredientsService.AddIngredient(It.IsAny<Ingredient>(), "userId");
 			_ingredientsRepository.Verify(r => r.PostIngredient(It.IsAny<Ingredient>()), Times.Once);
 		}
 
@@ -30,7 +31,7 @@ namespace WSEI_aspnet_project_tests
 		{
 			Ingredient nullIngredient = null;
 			_ingredientsRepository.Setup(i => i.GetIngredient(1)).Returns(nullIngredient);
-			MyResponse resultResponse = _ingredientsService.DeleteIngredient(1);
+			MyResponse resultResponse = _ingredientsService.DeleteIngredient(1, "userId");
 			MyResponse expectedResponse = new MyResponse(false, "Ingredient with id = " + 1 + " doesn't exist");
 
 			Assert.AreEqual(resultResponse.Message, expectedResponse.Message);
@@ -45,7 +46,7 @@ namespace WSEI_aspnet_project_tests
 			Ingredient ingredient = new Ingredient();
 			ingredient.Id = 2;
 			_ingredientsRepository.Setup(i => i.GetIngredient(2)).Returns(ingredient);
-			MyResponse resultResponse = _ingredientsService.DeleteIngredient(2);
+			MyResponse resultResponse = _ingredientsService.DeleteIngredient(2, "userId");
 			MyResponse expectedResponse = new MyResponse(true, "Ingredient id = " + ingredient.Id + " deleted successfully");
 
 			Assert.AreEqual(resultResponse.Message, expectedResponse.Message);
@@ -72,7 +73,7 @@ namespace WSEI_aspnet_project_tests
 		public void UpdateIngredientShouldSuccessAndForSecondTryFails()
 		{
 			Ingredient ingredient = new Ingredient();
-			MyResponse resultResponse = _ingredientsService.UpdateIngredient(5, ingredient);
+			MyResponse resultResponse = _ingredientsService.UpdateIngredient(ingredient, "userId");
 			MyResponse expectedResponse = new MyResponse(true, "Ingredient updated successfully");
 
 			Assert.AreEqual(resultResponse.Message, expectedResponse.Message);
@@ -80,7 +81,7 @@ namespace WSEI_aspnet_project_tests
 			_ingredientsRepository.Verify(r => r.GetIngredient(5), Times.Never);
 
 			_ingredientsRepository.Setup(r => r.PutIngredient(It.IsAny<Ingredient>())).Throws(new IOException());
-			resultResponse = _ingredientsService.UpdateIngredient(5, ingredient);
+			resultResponse = _ingredientsService.UpdateIngredient(ingredient, "userId");
 			expectedResponse = new MyResponse(false, "Ingredient with id = " + ingredient.Id + " doesn't exist");
 
 			Assert.AreEqual(resultResponse.Message, expectedResponse.Message);
