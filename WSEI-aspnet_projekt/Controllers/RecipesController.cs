@@ -53,6 +53,13 @@ namespace WSEI_aspnet_projekt.Controllers
             return recipe;
         }
 
+        // GET: api/recipes/sorted
+        [HttpPost("recipes/sorted")]
+        public List<Recipe> GetSortedRecipes([FromBody] GetRecipeFilter filter)
+        {
+            return _recipesService.GetSortedRecipes(filter);
+        }
+
         // PUT: api/recipes
         [Authorize]
         [HttpPut("recipes")]

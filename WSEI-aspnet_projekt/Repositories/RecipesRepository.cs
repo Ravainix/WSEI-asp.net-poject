@@ -22,6 +22,47 @@ public class RecipesRepository : IRecipesRepository
 		return  _context.Recipes.ToList();
 	}
 
+	public List<Recipe> GetSortedRecipes(GetRecipeFilter filter)
+	{
+		var query = _context.Recipes.AsNoTracking();
+		if (filter.CategoryId.HasValue)
+		{
+			query = query.Where(r => r.RecipeCategoryId == filter.CategoryId);
+		}
+
+		if ("rate".Equals(filter.Sort))
+		{
+			if ("asc".Equals(filter.SortOrder))
+			{
+				query = query.OrderBy(r => r.AvgRate);
+			} else if ("desc".Equals(filter.SortOrder))
+			{
+				query = query.OrderByDescending(r => r.AvgRate);
+			}
+		} else if ("date".Equals(filter.Sort))
+		{
+			if ("asc".Equals(filter.SortOrder))
+			{
+				query = query.OrderBy(r => r.CreatedOn);
+			}
+			else if ("desc".Equals(filter.SortOrder))
+			{
+				query = query.OrderByDescending(r => r.CreatedOn);
+			}
+		}
+
+		if (filter.Amount.HasValue && filter.Page.HasValue)
+		{
+			query = query.Skip(filter.Amount.Value * (filter.Page.Value - 1));
+		}
+		if (filter.Amount.HasValue)
+		{
+			query = query.Take(filter.Amount.Value);
+		}
+		
+		return query.ToList();
+	}
+
 	public List<Recipe> GetUserRecipes(string id)
 	{
 		return _context.Recipes.Where(r => r.UserId == id).ToList();

@@ -42,6 +42,8 @@ namespace WSEI_aspnet_projekt.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column(TypeName = "DateTime")]
 		public DateTime CreatedOn { get; }
+		[Column(TypeName = "decimal(3,2)")]
+		public float AvgRate { get; set; }
 		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual ICollection<Ingredient> Ingredients { get; set; }
 		[System.Text.Json.Serialization.JsonIgnore]

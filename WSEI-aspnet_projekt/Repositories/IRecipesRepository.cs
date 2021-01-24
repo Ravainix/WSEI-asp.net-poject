@@ -21,5 +21,6 @@ namespace WSEI_aspnet_projekt.Repositories
 		public void PostFavoriteRecipe(FavoriteRecipe favoriteRecipe);
 		public void DeleteFavoriteRecipe(FavoriteRecipe favoriteRecipe);
 		public void DeleteAllFavoriteRecipesForRecipe(int recipeId);
+		public List<Recipe> GetSortedRecipes(GetRecipeFilter filter);
 	}
 }

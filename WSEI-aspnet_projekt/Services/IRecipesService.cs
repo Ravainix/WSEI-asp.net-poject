@@ -22,5 +22,6 @@ namespace WSEI_aspnet_projekt.Services
 		public MyResponse PostFavoriteRecipe(FavoriteRecipe favoriteRecipe);
 		public MyResponse DeleteFavoriteRecipe(FavoriteRecipe favoriteRecipe);
 		public MyResponse UpdateRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients, string userId);
+		public List<Recipe> GetSortedRecipes(GetRecipeFilter filter);
 	}
 }

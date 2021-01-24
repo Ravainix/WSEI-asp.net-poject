@@ -26,6 +26,11 @@ public class RecipesService : IRecipesService
 		return _recipesRepository.GetRecipes();
 	}
 
+	public List<Recipe> GetSortedRecipes(GetRecipeFilter filter)
+	{
+		return _recipesRepository.GetSortedRecipes(filter);
+	}
+
 	public Recipe GetRecipe(int id) 
 	{
 		return _recipesRepository.GetRecipe(id);
