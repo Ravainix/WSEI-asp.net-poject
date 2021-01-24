@@ -43,11 +43,16 @@ namespace WSEI_aspnet_projekt.Models
 		[Column(TypeName = "DateTime")]
 		public DateTime CreatedOn { get; }
 		[Column(TypeName = "decimal(3,2)")]
-		public float AvgRate { get; set; }
+		[Range(0, 5)]
+		public float AvgRate { get; private set; }
 		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual ICollection<Ingredient> Ingredients { get; set; }
 		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual ICollection<FavoriteRecipe> FavoriteRecipes { get; set; }
+		[System.Text.Json.Serialization.JsonIgnore]
+		public virtual ICollection<Comment> Comments { get; set; }
+		[System.Text.Json.Serialization.JsonIgnore]
+		public virtual ICollection<Rating> Ratings { get; set; }
 	}
 }
  

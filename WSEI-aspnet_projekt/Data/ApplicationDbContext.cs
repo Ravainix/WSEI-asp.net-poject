@@ -21,6 +21,8 @@ namespace WSEI_aspnet_projekt.Data
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<FavoriteRecipe> FavoriteRecipes { get; set; }
         public DbSet<RecipeCategory> RecipeCategories { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -61,6 +63,18 @@ namespace WSEI_aspnet_projekt.Data
             modelBuilder.Entity<Recipe>()
                 .Property(r => r.CreatedOn)
                 .HasDefaultValueSql("getdate()");
+
+            modelBuilder.Entity<Comment>()
+                .Property(c => c.CreatedOn)
+                .HasDefaultValueSql("getdate()");
+
+            modelBuilder.Entity<Comment>()
+                .HasIndex(c => new { c.UserId, c.RecipeId })
+                .IsUnique();
+
+            modelBuilder.Entity<Rating>()
+                .HasIndex(f => new { f.UserId, f.RecipeId })
+                .IsUnique();
         }
     }
 }
