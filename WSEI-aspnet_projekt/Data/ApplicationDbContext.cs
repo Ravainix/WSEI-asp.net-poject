@@ -57,6 +57,10 @@ namespace WSEI_aspnet_projekt.Data
                 new RecipeCategory() { Id = 24, Name = "Z nabiałem", ParentId = 8 },
                 new RecipeCategory() { Id = 25, Name = "Vege", ParentId = 8 }
             );
+
+            modelBuilder.Entity<Recipe>()
+                .Property(r => r.CreatedOn)
+                .HasDefaultValueSql("getdate()");
         }
     }
 }

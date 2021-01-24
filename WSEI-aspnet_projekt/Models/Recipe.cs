@@ -36,7 +36,15 @@ namespace WSEI_aspnet_projekt.Models
 		public int PrepareTime { get; set; }
 		[Column(TypeName = "nvarchar(30)")]
 		public RecipeDifficulty Difficulty { get; set; }
+		[Column(TypeName = "int")]
+		[ForeignKey("RecipeCategoryId")]
+		public int? RecipeCategoryId { get; set; }
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column(TypeName = "DateTime")]
+		public DateTime CreatedOn { get; }
+		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual ICollection<Ingredient> Ingredients { get; set; }
+		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual ICollection<FavoriteRecipe> FavoriteRecipes { get; set; }
 	}
 }

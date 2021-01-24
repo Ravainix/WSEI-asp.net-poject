@@ -20,5 +20,6 @@ namespace WSEI_aspnet_projekt.Models
 		public int? ParentId { get; set; }
 		public virtual RecipeCategory Parent { get; set; }
 		public virtual ICollection<RecipeCategory> Children { get; set; }
+		public virtual ICollection<Recipe> Recipes { get; set; }
 	}
 }
