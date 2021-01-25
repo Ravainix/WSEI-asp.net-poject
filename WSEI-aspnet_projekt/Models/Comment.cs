@@ -27,6 +27,7 @@ namespace WSEI_aspnet_projekt.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column(TypeName = "DateTime")]
 		public DateTime CreatedOn { get; }
+		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual ApplicationUser User { get; set; }
 	}
 }

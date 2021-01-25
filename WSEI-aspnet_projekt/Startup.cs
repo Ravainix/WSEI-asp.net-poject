@@ -43,6 +43,10 @@ namespace WSEI_aspnet_projekt
 
             services.AddScoped<IFileService, FileService>();
 
+            services.AddScoped<ICommentsService, CommentsService>();
+
+            services.AddScoped<ICommentsRepository, CommentsRepository>();
+
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 

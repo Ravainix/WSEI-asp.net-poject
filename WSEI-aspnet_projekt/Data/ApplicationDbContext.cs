@@ -68,10 +68,6 @@ namespace WSEI_aspnet_projekt.Data
                 .Property(c => c.CreatedOn)
                 .HasDefaultValueSql("getdate()");
 
-            modelBuilder.Entity<Comment>()
-                .HasIndex(c => new { c.UserId, c.RecipeId })
-                .IsUnique();
-
             modelBuilder.Entity<Rating>()
                 .HasIndex(f => new { f.UserId, f.RecipeId })
                 .IsUnique();

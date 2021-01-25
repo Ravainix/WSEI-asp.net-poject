@@ -137,12 +137,10 @@ public class RecipesService : IRecipesService
 	{
 		Recipe recipe = GetRecipe(id);
 		MyResponse validateResult = ValidateDeleteRecipe(recipe, userId);
-		if (validateResult.IsFailed())
+		if (validateResult.IsSuccess())
 		{
-			return validateResult;
+			_recipesRepository.DeleteRecipe(recipe);
 		}
-
-		_recipesRepository.DeleteRecipe(recipe);
 		return validateResult;
 	}
 
