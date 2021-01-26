@@ -43,15 +43,8 @@ namespace WSEI_aspnet_projekt.Repositories
 		public void PutIngredient(Ingredient ingredient)
 		{
 			_context.Entry(ingredient).State = EntityState.Modified;
-			try
-			{
-				_context.SaveChanges();
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				_context.Entry(ingredient).State = EntityState.Detached;
-				throw;
-			}
+			_context.SaveChanges();
+			_context.Entry(ingredient).State = EntityState.Detached;
 		}
 
 		public void DeleteIngredient(Ingredient ingredient)

@@ -41,10 +41,11 @@ namespace WSEI_aspnet_projekt.Models
 		public int? RecipeCategoryId { get; set; }
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column(TypeName = "DateTime")]
-		public DateTime CreatedOn { get; }
+		public DateTime CreatedOn { get; set; }
 		[Column(TypeName = "decimal(3,2)")]
-		[Range(0, 5)]
 		public float AvgRate { get; private set; }
+		[Column(TypeName = "int")]
+		public int RateCount { get; private set; }
 		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual ICollection<Ingredient> Ingredients { get; set; }
 		[System.Text.Json.Serialization.JsonIgnore]

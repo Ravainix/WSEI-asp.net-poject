@@ -44,5 +44,10 @@ namespace WSEI_aspnet_projekt.Repositories
 			_context.Comments.Remove(comment);
 			_context.SaveChanges();
 		}
+
+		public string GetUsername(string userId)
+		{
+			return _context.Users.Where(u => u.Id.Equals(userId)).Select(u => u.UserName).SingleOrDefault();
+		}
 	}
 }

@@ -17,6 +17,8 @@ namespace WSEI_aspnet_projekt.Models
 		[Required]
 		[ForeignKey("UserId")]
 		public string UserId { get; set; }
+		[Column(TypeName = "nvarchar(450)")]
+		public string UserName { get; set; }
 		[Column(TypeName = "int")]
 		[Required]
 		[ForeignKey("RecipeId")]

@@ -35,11 +35,13 @@ public class RecipesRepository : IRecipesRepository
 			if ("asc".Equals(filter.SortOrder))
 			{
 				query = query.OrderBy(r => r.AvgRate);
-			} else if ("desc".Equals(filter.SortOrder))
+			} 
+			else if ("desc".Equals(filter.SortOrder))
 			{
 				query = query.OrderByDescending(r => r.AvgRate);
 			}
-		} else if ("date".Equals(filter.Sort))
+		} 
+		else if ("date".Equals(filter.Sort))
 		{
 			if ("asc".Equals(filter.SortOrder))
 			{
@@ -81,17 +83,8 @@ public class RecipesRepository : IRecipesRepository
 	public void PutRecipe(Recipe recipe)
 	{
 		_context.Entry(recipe).State = EntityState.Modified;
-		try
-		{
-			 _context.SaveChanges();
-		}
-		catch (DbUpdateConcurrencyException)
-		{
-			throw;
-		} finally
-		{
-			_context.Entry(recipe).State = EntityState.Detached;
-		}
+		_context.SaveChanges();
+		_context.Entry(recipe).State = EntityState.Detached;
 	}
 
 	public bool IsRecipeExists(int id)

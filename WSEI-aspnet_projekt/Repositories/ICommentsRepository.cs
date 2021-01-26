@@ -12,5 +12,6 @@ namespace WSEI_aspnet_projekt.Repositories
 		public List<Comment> GetCommentsForRecipe(int recipeId);
 		public Comment GetComment(int id);
 		public void DeleteComment(Comment comment);
+		public string GetUsername(string userId);
 	}
 }

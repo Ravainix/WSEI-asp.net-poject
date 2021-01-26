@@ -43,19 +43,20 @@ public class RecipesService : IRecipesService
 
 	public MyResponse UpdateRecipe(Recipe recipe, string userId)
 	{
-		MyResponse validResult = ValidatePutRecipe(recipe, userId);
+		Recipe recipeFromDb = GetRecipe(recipe.Id);
+		MyResponse validResult = ValidatePutRecipe(recipe, recipeFromDb, userId);
 		if (validResult.IsSuccess())
 		{
 			recipe.UserId = userId;
+			recipe.CreatedOn = recipeFromDb.CreatedOn;
 			_recipesRepository.PutRecipe(recipe);
 		}
 		return validResult;
 	}
 
-	private MyResponse ValidatePutRecipe(Recipe recipe, string userId)
+	private MyResponse ValidatePutRecipe(Recipe recipe, Recipe recipeFromDb, string userId)
 	{
 		MyResponse response = new MyResponse(false);
-		Recipe recipeFromDb = GetRecipe(recipe.Id);
 		if (recipeFromDb == null)
 		{
 			response.Message = "Recipe with id = " + recipe.Id + " doesn't exist";
@@ -71,6 +72,7 @@ public class RecipesService : IRecipesService
 
 	public void AddRecipe(Recipe recipe)
 	{
+		recipe.CreatedOn = DateTime.Now;
 		_recipesRepository.PostRecipe(recipe);
 	}
 
@@ -78,7 +80,7 @@ public class RecipesService : IRecipesService
 	{
 		Recipe recipe = recipeWithIngredients.Recipe;
 		recipe.UserId = userId;
-		_recipesRepository.PostRecipe(recipe);
+		AddRecipe(recipe);
 		foreach (Ingredient ingredient in recipeWithIngredients.Ingredients)
 		{
 			ingredient.RecipeId = recipeWithIngredients.Recipe.Id;

@@ -18,6 +18,7 @@ namespace WSEI_aspnet_projekt.Services
 
 		public void AddComment(Comment comment)
 		{
+			comment.UserName = _commentsRepository.GetUsername(comment.UserId);
 			_commentsRepository.PostComment(comment);
 		}
 
