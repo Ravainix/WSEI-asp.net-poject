@@ -5,7 +5,7 @@ import { getWithIngredients } from '../helpers/recipesApi'
 import { Row, Col } from 'reactstrap'
 import Ingredient from './Ingredient'
 import ShareRecipe from './ShareRecipe'
-import Loader from './Loader';
+import Loader from './common/Loader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserFriends, faHourglass } from '@fortawesome/free-solid-svg-icons'
 

@@ -1,35 +1,36 @@
 ﻿.recipeItem-card {
-    height: 300px;
-    text-align: center;
-    border: none;
-    
-    &:hover {
-        background-color: #F6F6F6;
-    }
+  height: 300px;
+  text-align: center;
+  border: none;
 
-    a {
-        text-decoration: none;
-        color: black;
-    }
+  background-color: #f6f6f6;
+  &:hover {
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
 }
 
 .recipeItem-img {
-    margin: 0 auto;
-    width: 150px;
-    display: block;
+  //   margin: 0 auto;
+  width: auto;
+  height: 100%;
+  display: block;
 
-&--hover {
+  &--hover {
     width: 80px;
     margin: 0 auto;
+  }
 }
-         }
 
 .recipeItem-description {
-    margin: 0 auto;
-    display: none;
-    margin-top: 30px;
+  margin: 0 auto;
+  //   display: none;
+  margin-top: 30px;
 
-    &--hover {
-        display: inherit;
-    }
+  &--hover {
+    display: inherit;
+  }
 }

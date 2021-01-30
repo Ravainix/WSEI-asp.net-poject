@@ -1,46 +1,44 @@
-﻿import React, { Component } from 'react'
+﻿import React, { useState, useEffect } from "react";
+import { Alert } from "reactstrap";
 
-import * as RecipeApi from '../helpers/recipesApi'
+import * as RecipeApi from "../helpers/recipesApi";
 import RecipesMenu from "./RecipesMenu";
-import RecipesList from './RecipesList'
+import RecipesList from "./RecipesList";
+import Loader from "./common/Loader";
 
+const RecipesContainer = () => {
+  const [recipes, setRecipes] = useState(null);
+  const [error, setError] = useState(false);
+  const [isUserRecipe, setIsUserRecipe] = useState(false);
 
-export default class RecipesContainer extends Component {
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const response = await RecipeApi.getAll();
+        setRecipes(response);
+      } catch (error) {
+        setError(true);
+        console.error(error);
+      }
+    };
 
-    constructor(props) {
-        super(props)
+    fetchRecipes();
+  }, []);
 
-        this.state = {
-            recipes: null,
-            userRecipes: false
-        }
-    }
+  if (error) {
+    return <Alert color="danger">Something went wrong.</Alert>;
+  }
 
-    componentDidMount = async () => {
-        this.getRecipes()
-    }
-    
-    getRecipes = async (action) => {
-        let recipes
-        switch(action) {
-            case 'GET_CURRENT_USER':
-                recipes = await RecipeApi.getAllUser()
-                this.setState({recipes, userRecipes: true})
-                break;
-            default:
-                recipes = await RecipeApi.getAll()
-                this.setState({recipes, userRecipes: false})
-                break;
-        }
-    }
+  if (recipes) {
+    return (
+      <div className="border rounded">
+        {/* <RecipesMenu getRecipes={this.getRecipes} /> */}
+        <RecipesList recipes={recipes} userRecipes={isUserRecipe} />
+      </div>
+    );
+  }
 
-    render() {
-        const { recipes, userRecipes } = this.state
-        return (
-            <div className="border rounded">
-                <RecipesMenu getRecipes={this.getRecipes} />
-                {recipes && <RecipesList recipes={recipes} userRecipes={userRecipes}/>}
-            </div>
-        )
-    }
-}
+  return <Loader />;
+};
+
+export default RecipesContainer;

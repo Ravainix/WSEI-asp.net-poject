@@ -1,34 +1,29 @@
-﻿import React, { Component } from 'react'
-import RecipeForm from './RecipeForm'
-import { Redirect } from 'react-router';
+﻿import React, { useState } from "react";
+import RecipeForm from "./RecipeForm";
+import { Redirect } from "react-router";
 
-import * as RecipeApi from '../helpers/recipesApi'
-import authService from './api-authorization/AuthorizeService'
+import * as RecipeApi from "../helpers/recipesApi";
+import authService from "./api-authorization/AuthorizeService";
 
-export default class AddRecipe extends Component {
+const AddRecipe = () => {
+  const [recipe, setRecipe] = useState(null);
 
-    constructor(props) {
-        super(props)
+  const handleFormSubmit = async (formData) => {
+    const resposne = await RecipeApi.create(formData);
+    setRecipe({ recipe: resposne });
+  };
 
-        this.state = {
-            recipe: null
-        }
-    }
+  return (
+    <>
+      <RecipeForm handleSubmitForm={handleFormSubmit} />
 
-    handleFormSubmit = async formData => {
-        const resposne = await RecipeApi.create(formData )
-        console.log("Recipe created!")
-        this.setState({ recipe: resposne})
-    }
+      {recipe && (
+        <Redirect
+          to={{ pathname: "/recipes", state: { isRecipeCreated: true } }}
+        />
+      )}
+    </>
+  );
+};
 
-    render() {
-        const { recipe } = this.state
-        return (
-            <>
-            <RecipeForm handleSubmitForm={this.handleFormSubmit} />
-
-            {recipe && <Redirect to={{ pathname: "/recipes", state: {isRecipeCreated: true} }}  />}
-            </>
-        )
-    }
-}
+export default AddRecipe;
