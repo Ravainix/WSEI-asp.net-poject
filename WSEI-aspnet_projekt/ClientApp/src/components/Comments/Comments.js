@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Row, Col } from "reactstrap";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { getAll } from "../helpers/commentsApi";
+import { getAll } from "../../helpers/commentsApi";
 import CommentsList from "./CommentsList";
-import AuthorizeService from "../components/api-authorization/AuthorizeService";
-import CommentForm from "./CommentForm";
+import AuthorizeService from "../api-authorization/AuthorizeService";
+import CommentAddNew from "./CommentAddNew";
 
 const Comments = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -30,14 +30,14 @@ const Comments = () => {
           <h5>Komentarze</h5>
         </Col>
       </Row>
-      <Row>
+      <Row className="mt-3">
         {isAuthenticated ? (
           <>
             <Col xs="12">
               <h6>Dodaj swój komentarz:</h6>
             </Col>
             <Col xs="12">
-              <CommentForm />
+              <CommentAddNew />
             </Col>
           </>
         ) : null}

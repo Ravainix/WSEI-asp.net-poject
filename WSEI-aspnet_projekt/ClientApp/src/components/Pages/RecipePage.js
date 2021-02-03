@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserFriends, faHourglass } from "@fortawesome/free-solid-svg-icons";
 import { Alert } from "reactstrap";
 import StarRating from "../BrowseRecipes/common/StarRating";
-import Comments from "../../Comments/Comments";
+import Comments from "../Comments/Comments";
 
 const RecipePage = () => {
   const { id } = useParams();
