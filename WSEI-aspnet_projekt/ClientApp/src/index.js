@@ -1,23 +1,27 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
-import store from './store'
+import "bootstrap/dist/css/bootstrap.css";
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
-import './stylesheets/main.scss';
+import "./stylesheets/main.scss";
 
-const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
-const rootElement = document.getElementById('root');
+const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
+const rootElement = document.getElementById("root");
+
+const queryClient = new QueryClient();
 
 ReactDOM.render(
-    <Provider store={store}>
-        <BrowserRouter basename={baseUrl}>
-            <App />
-        </BrowserRouter>
-    </Provider>,
-  rootElement);
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter basename={baseUrl}>
+      <App />
+    </BrowserRouter>
+    <ReactQueryDevtools initialIsOpen={false} />
+  </QueryClientProvider>,
+  rootElement
+);
 
 // Uncomment the line above that imports the registerServiceWorker function
 // and the line below to register the generated service worker.
@@ -27,4 +31,3 @@ ReactDOM.render(
 // disabled by default when Identity is being used.
 //
 //registerServiceWorker();
-

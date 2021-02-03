@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Collapse,
   Navbar,
@@ -9,9 +9,41 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { LoginMenu } from "../api-authorization/LoginMenu";
+import authService from "../api-authorization/AuthorizeService";
+
+const ROUTES = [
+  {
+    name: "Przeglądaj",
+    path: "/recipes",
+    authenticated: false,
+  },
+  {
+    name: "Moje przepisy",
+    path: "/recipes/user",
+    authenticated: true,
+  },
+  {
+    name: "Dodaj przepis",
+    path: "/recipes/add",
+    authenticated: true,
+  },
+];
 
 const NavMenu = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  console.log(isAuthenticated === true);
+
+  useEffect(() => {
+    const authenticate = async () => {
+      const resault = await authService.isAuthenticated();
+
+      setIsAuthenticated(!!resault);
+    };
+
+    authenticate();
+    console.log(isAuthenticated);
+  }, []);
 
   const toggleNavbar = () => {
     setIsCollapsed((state) => !state);
@@ -34,16 +66,15 @@ const NavMenu = () => {
           navbar
         >
           <ul className="navbar-nav flex-grow">
-            <NavItem>
-              <NavLink tag={Link} className="text-dark" to="/recipes">
-                Recipes
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink tag={Link} className="text-dark" to="/recipes/add">
-                Add recipe
-              </NavLink>
-            </NavItem>
+            {ROUTES.map(({ path, name, authenticated }) =>
+              isAuthenticated === authenticated ? (
+                <NavItem key={path}>
+                  <NavLink tag={Link} className="text-dark" to={path}>
+                    {name}
+                  </NavLink>
+                </NavItem>
+              ) : null
+            )}
             <LoginMenu />
           </ul>
         </Collapse>
@@ -51,5 +82,4 @@ const NavMenu = () => {
     </nav>
   );
 };
-
 export default NavMenu;

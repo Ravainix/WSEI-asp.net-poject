@@ -1,11 +1,9 @@
 ﻿.recipeItem-card {
-  height: 300px;
-  text-align: center;
+  // height: 300px;
+  // text-align: center;
   border: none;
 
   background-color: #f6f6f6;
-  &:hover {
-  }
 
   a {
     text-decoration: none;
@@ -14,7 +12,6 @@
 }
 
 .recipeItem-img {
-  //   margin: 0 auto;
   width: auto;
   height: 100%;
   display: block;
@@ -27,7 +24,7 @@
 
 .recipeItem-description {
   margin: 0 auto;
-  //   display: none;
+  //display: none;
   margin-top: 30px;
 
   &--hover {

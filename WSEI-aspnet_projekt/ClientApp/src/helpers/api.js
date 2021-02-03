@@ -12,8 +12,7 @@ const apiCall = async (url, method, body) =>
   })
     .then((response) => response.data)
     .catch((error) => {
-      console.error(error.response);
-      return error;
+      throw new Error(error);
     });
 
 export const get = async (url) => apiCall(url, "GET");

@@ -1,32 +1,19 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchAllRecipes } from '../../features/recipes/recipesSlice'
+import React, { useEffect } from "react";
 
-import { Container } from 'reactstrap';
-import NavMenu from '../Navbar/NavMenu';
-import Footer from '../Footer/Footer';
-import Loader from './Loader';
+import { Container } from "reactstrap";
+import NavMenu from "../Navbar/NavMenu";
+import Footer from "../Footer/Footer";
 
-
-const Layout = ({ children }) => {
-    const dispatch = useDispatch();
-    const data = useSelector(state => state.recipes.entities)
-
-    useEffect(() => {
-        dispatch(fetchAllRecipes())
-    }, [])
-
-    return (
-      <div>
-        <NavMenu />
-        <main>
-          <Container style={{ marginTop: 100, minHeight: 700 }}>
-            {data ? children : <Loader />}
-          </Container>
-        </main>
-        <Footer />
-      </div>
-    );
-}
+const Layout = ({ children }) => (
+  <div>
+    <NavMenu />
+    <main>
+      <Container style={{ marginTop: 100, minHeight: 700 }}>
+        {children}
+      </Container>
+    </main>
+    <Footer />
+  </div>
+);
 
 export default Layout;

@@ -1,8 +1,8 @@
 import React from "react";
 
-import Searchbar from './Searchbar'
+import Searchbar from "../Heropage/Searchbar";
 
-const Hero = () => {
+const HeroPage = () => {
   return (
     <>
       <div className="text-center">
@@ -13,4 +13,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default HeroPage;
