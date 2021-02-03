@@ -32,7 +32,6 @@ const ROUTES = [
 const NavMenu = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  console.log(isAuthenticated === true);
 
   useEffect(() => {
     const authenticate = async () => {
@@ -42,7 +41,7 @@ const NavMenu = () => {
     };
 
     authenticate();
-    console.log(isAuthenticated);
+    console.log("zalogowany ", isAuthenticated);
   }, []);
 
   const toggleNavbar = () => {
@@ -67,7 +66,7 @@ const NavMenu = () => {
         >
           <ul className="navbar-nav flex-grow">
             {ROUTES.map(({ path, name, authenticated }) =>
-              isAuthenticated === authenticated ? (
+              isAuthenticated === authenticated || !authenticated ? (
                 <NavItem key={path}>
                   <NavLink tag={Link} className="text-dark" to={path}>
                     {name}
