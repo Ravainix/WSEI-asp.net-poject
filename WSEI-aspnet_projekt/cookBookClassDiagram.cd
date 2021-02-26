@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WSEI_aspnet_projekt.Models.ApplicationUser" Collapsed="true">
+    <Position X="1.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ApplicationUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Models.Comment">
+    <Position X="1.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAAgAAAAAAAAAAAAgAAAACAAAAAQAACAAAAAA=</HashCode>
+      <FileName>Models\Comment.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="User" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Models.Recipe">
+    <Position X="4" Y="1" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>gAADAAIEAQAgAQAAAhAAACwAAAAKABAAAAAAAAAkIAA=</HashCode>
+      <FileName>Models\Recipe.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Difficulty" />
+      <Property Name="User" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Ingredients" />
+      <Property Name="FavoriteRecipes" />
+      <Property Name="Comments" />
+      <Property Name="Ratings" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Models.Ingredient">
+    <Position X="8.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Models\Ingredient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Models.FavoriteRecipe">
+    <Position X="2.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Models\FavoriteRecipe.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="User" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Models.Rating">
+    <Position X="1" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAADAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Models\Rating.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="User" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Models.RecipeCategory">
+    <Position X="6.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAEYAQAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Models\RecipeCategory.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Recipes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Models.RecipeWithIngredients">
+    <Position X="6.75" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\RecipeWithIngredients.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Recipe" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Ingredients" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Models.MyResponse">
+    <Position X="5.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAEAAACAAAAAgAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Models\MyResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Models.GetRecipeFilter">
+    <Position X="4" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAQAgAAAAAQAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\GetRecipeFilter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecipesService">
+    <Position X="17.75" Y="3.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>QICAAIhACgACAgAAAAFACBAAACAAIAAAABAAEAkAAMA=</HashCode>
+      <FileName>Services\RecipesService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_recipesRepository" />
+      <Field Name="_ingredientsRepository" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.254" />
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Services.RatingsService">
+    <Position X="21.25" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAACAAAAAAAAAAAAAAAAABAIAA=</HashCode>
+      <FileName>Services\RatingsService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_ratingsRepository" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Services.CommentsService">
+    <Position X="21.25" Y="6.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAIAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAACA=</HashCode>
+      <FileName>Services\CommentsService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_commentsRepository" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Services.IngredientsService">
+    <Position X="15.25" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAImAAEAAAAAAAAAAQAEAABIAAAAEAAAA=</HashCode>
+      <FileName>Services\IngredientsService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_ingredientsRepository" />
+      <Field Name="_recipesService" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Services.FileService">
+    <Position X="15" Y="7.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAIAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Services\FileService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_hostEnvironment" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Controllers.RecipesController">
+    <Position X="31" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QIAAEAAADAAAAAAAGAEAABAAAAKAIBAAAAAAAAEAAEA=</HashCode>
+      <FileName>Controllers\RecipesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Controllers.RatingsController">
+    <Position X="28.5" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAACAAAAAgIAAAAAAAAA=</HashCode>
+      <FileName>Controllers\RatingsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Controllers.OidcConfigurationController">
+    <Position X="33.5" Y="6.5" Width="2.5" />
+    <InheritanceLine Type="Microsoft.AspNetCore.Mvc.Controller" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="34.25" Y="5.441" />
+        <Point X="34.25" Y="6.376" />
+        <Point X="34.25" Y="6.376" />
+        <Point X="34.25" Y="6.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\OidcConfigurationController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Controllers.IngredientsController">
+    <Position X="33" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAGAAAAAAAAEACAAAAAAAAAAAACQAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\IngredientsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Controllers.FilesController">
+    <Position X="28.5" Y="6.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAABAAAAAEgQAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Controllers\FilesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Controllers.CommentsController">
+    <Position X="28.5" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAABAAAAAAAAAAAAAAAAACAAAAAAAEAAAAAACA=</HashCode>
+      <FileName>Controllers\CommentsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.AspNetCore.Mvc.ControllerBase" Collapsed="true">
+    <Position X="30.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Microsoft.AspNetCore.Mvc.Controller" Collapsed="true">
+    <Position X="33.5" Y="4.75" Width="1.5" />
+    <InheritanceLine Type="Microsoft.AspNetCore.Mvc.ControllerBase" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="32.062" Y="2.812" />
+        <Point X="32.062" Y="3.938" />
+        <Point X="34.25" Y="3.938" />
+        <Point X="34.25" Y="4.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier />
+    <Lollipop Position="0.231" />
+  </Class>
+  <Class Name="RecipesRepository">
+    <Position X="42.75" Y="4.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>wIAAEEAECAAABAAAAAFAABAAAAIAAAAAAAAAAAEAAEA=</HashCode>
+      <FileName>Repositories\RecipesRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Repositories.RatingsRepository">
+    <Position X="42.75" Y="1.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAABACAABABCAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Repositories\RatingsRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Repositories.IngredientsRepository">
+    <Position X="45.75" Y="5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAGAAAAAAAAABCAAAAAAAAAAAACQAEAAAAAAAAAIAIA=</HashCode>
+      <FileName>Repositories\IngredientsRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WSEI_aspnet_projekt.Repositories.CommentsRepository">
+    <Position X="45.75" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ARAAAAAABAAABAAAAAAAAAAAQAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Repositories\CommentsRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="WSEI_aspnet_projekt.Repositories.IRatingsRepository" Collapsed="true">
+    <Position X="21.5" Y="5.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAABACAABAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Repositories\IRatingsRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="WSEI_aspnet_projekt.Repositories.ICommentsRepository" Collapsed="true">
+    <Position X="21.25" Y="9.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ARAAAAAABAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Repositories\ICommentsRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Microsoft.AspNetCore.Hosting.IWebHostEnvironment" Collapsed="true">
+    <Position X="15.25" Y="9.75" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="WSEI_aspnet_projekt.Repositories.IIngredientsRepository" Collapsed="true">
+    <Position X="17.5" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAGAAAAAAAAAACAAAAAAAAAAAACQAEAAAAAAAAAIAIA=</HashCode>
+      <FileName>Repositories\IIngredientsRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="WSEI_aspnet_projekt.Repositories.IRecipesRepository" Collapsed="true">
+    <Position X="18.25" Y="9.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>wIAAEEAECAAAAAAAAAFAABAAAAIAAAAAAAAAAAEAAEA=</HashCode>
+      <FileName>Repositories\IRecipesRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="WSEI_aspnet_projekt.Services.IRecipesService" Collapsed="true">
+    <Position X="15.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIAAAABACAAAAAAAAAFAABAAACAAIAAAABAAAAEAAMA=</HashCode>
+      <FileName>Services\IRecipesService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="WSEI_aspnet_projekt.Models.RecipeDifficulty">
+    <Position X="7.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAgAAAAAAAAAgAAkAAA=</HashCode>
+      <FileName>Models\RecipeDifficulty.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

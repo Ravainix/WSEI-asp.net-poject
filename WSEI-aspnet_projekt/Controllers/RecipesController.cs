@@ -60,6 +60,21 @@ namespace WSEI_aspnet_projekt.Controllers
             return _recipesService.GetSortedRecipes(filter);
         }
 
+        // GET: api/recipesWithIngredients/{id}
+        [HttpGet("recipesWithIngredients/{id}")]
+        public RecipeWithIngredients GetRecipeWithIngredients(int id)
+        {
+            return _recipesService.GetRecipeWithIngredients(id);
+        }
+
+        // GET: api/recipes/favorite
+        [Authorize]
+        [HttpGet("recipes/favorite")]
+        public ActionResult<IEnumerable<Recipe>> GetFavoriteRecipes()
+        {
+            return _recipesService.GetFavoriteRecipes(GetUserId());
+        }
+
         // PUT: api/recipes
         [Authorize]
         [HttpPut("recipes")]
@@ -100,27 +115,12 @@ namespace WSEI_aspnet_projekt.Controllers
             return _recipesService.UpdateRecipeWithIngredients(recipeWithIngredients, GetUserId());
         }
 
-        // GET: api/recipesWithIngredients/{id}
-        [HttpGet("recipesWithIngredients/{id}")]
-        public RecipeWithIngredients GetRecipeWithIngredients(int id)
-        {
-            return _recipesService.GetRecipeWithIngredients(id);
-        }
-
         // DELETE: api/recipes/{id}
         [Authorize]
         [HttpDelete("recipes/{id}")]
         public ActionResult<MyResponse> DeleteRecipe(int id)
         {
             return _recipesService.DeleteRecipe(id, GetUserId());
-        }
-
-        // GET: api/recipes/favorite
-        [Authorize]
-        [HttpGet("recipes/favorite")]
-        public ActionResult<IEnumerable<Recipe>> GetFavoriteRecipes()
-        {
-            return _recipesService.GetFavoriteRecipes(GetUserId());
         }
 
         // POST: api/recipes/favorite/{recipeId}

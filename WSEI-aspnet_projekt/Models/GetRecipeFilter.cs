@@ -12,6 +12,7 @@ namespace WSEI_aspnet_projekt.Models
 		public string? Sort { get; set; }
 		public string? SortOrder { get; set; }
 		public int? CategoryId { get; set; }
-
+		public String[]? Ingredients { get; set; }
+		public int? MinimumIngredientsMatch { get; set; }
 	}
 }

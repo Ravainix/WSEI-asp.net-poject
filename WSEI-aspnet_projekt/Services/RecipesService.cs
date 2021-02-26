@@ -12,6 +12,8 @@ using WSEI_aspnet_projekt.Services;
 
 public class RecipesService : IRecipesService 
 {
+	private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
 	private readonly IRecipesRepository _recipesRepository;
 	private readonly IIngredientsRepository _ingredientsRepository;
 
@@ -21,9 +23,19 @@ public class RecipesService : IRecipesService
 		_ingredientsRepository = ingredientsRepository;
 	}
 
+	public List<Recipe> GetUserRecipes(string id)
+	{
+		return _recipesRepository.GetUserRecipes(id);
+	}
+
 	public List<Recipe> GetRecipes()
 	{
 		return _recipesRepository.GetRecipes();
+	}
+
+	public Recipe GetRecipe(int id)
+	{
+		return _recipesRepository.GetRecipe(id);
 	}
 
 	public List<Recipe> GetSortedRecipes(GetRecipeFilter filter)
@@ -31,14 +43,16 @@ public class RecipesService : IRecipesService
 		return _recipesRepository.GetSortedRecipes(filter);
 	}
 
-	public Recipe GetRecipe(int id) 
+	public RecipeWithIngredients GetRecipeWithIngredients(int id)
 	{
-		return _recipesRepository.GetRecipe(id);
+		return new RecipeWithIngredients(
+			_recipesRepository.GetRecipe(id),
+			_ingredientsRepository.GetIngredientsForRecipe(id).ToArray());
 	}
 
-	public List<Recipe> GetUserRecipes(string id)
+	public List<Recipe> GetFavoriteRecipes(string userId)
 	{
-		return _recipesRepository.GetUserRecipes(id);
+		return _recipesRepository.GetFavoriteRecipes(userId);
 	}
 
 	public MyResponse UpdateRecipe(Recipe recipe, string userId)
@@ -60,10 +74,12 @@ public class RecipesService : IRecipesService
 		if (recipeFromDb == null)
 		{
 			response.Message = "Recipe with id = " + recipe.Id + " doesn't exist";
-		} else if (!recipeFromDb.UserId.Equals(userId))
+		}
+		else if (!recipeFromDb.UserId.Equals(userId))
 		{
 			response.Message = "You are not a creator of that recipe, update rejected";
-		} else
+		}
+		else
 		{
 			response.Success = true;
 		}
@@ -128,13 +144,6 @@ public class RecipesService : IRecipesService
 		});
 	}
 
-	public RecipeWithIngredients GetRecipeWithIngredients(int id)
-	{
-		return new RecipeWithIngredients(
-			_recipesRepository.GetRecipe(id),
-			_ingredientsRepository.GetIngredientsForRecipe(id).ToArray());
-	}
-
 	public MyResponse DeleteRecipe(int id, string userId)
 	{
 		Recipe recipe = GetRecipe(id);
@@ -142,6 +151,7 @@ public class RecipesService : IRecipesService
 		if (validateResult.IsSuccess())
 		{
 			_recipesRepository.DeleteRecipe(recipe);
+			log.Info("UserId: " + userId + " deleted recipe with id: " + id);
 		}
 		return validateResult;
 	}
@@ -162,11 +172,6 @@ public class RecipesService : IRecipesService
 			response.Success = true;
 		}
 		return response;
-	}
-
-	public List<Recipe> GetFavoriteRecipes(string userId)
-	{
-		return _recipesRepository.GetFavoriteRecipes(userId);
 	}
 
 	public MyResponse PostFavoriteRecipe(FavoriteRecipe favoriteRecipe)
