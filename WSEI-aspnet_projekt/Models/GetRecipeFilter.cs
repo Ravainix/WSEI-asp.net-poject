@@ -14,5 +14,6 @@ namespace WSEI_aspnet_projekt.Models
 		public int? CategoryId { get; set; }
 		public String[]? Ingredients { get; set; }
 		public int? MinimumIngredientsMatch { get; set; }
+		public string? Name { get; set; }
 	}
 }

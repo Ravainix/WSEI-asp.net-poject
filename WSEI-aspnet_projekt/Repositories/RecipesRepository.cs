@@ -58,12 +58,14 @@ public class RecipesRepository : IRecipesRepository
 
 			query = query.Where(r => recipeIds.Contains(r.Id));
 		}
-
 		if (filter.CategoryId.HasValue)
 		{
 			query = query.Where(r => r.RecipeCategoryId == filter.CategoryId);
 		}
-
+		if (!String.IsNullOrEmpty(filter.Name))
+		{
+			query = query.Where(r => r.Name.Contains(filter.Name));
+		}
 		if ("rate".Equals(filter.Sort))
 		{
 			if ("asc".Equals(filter.SortOrder))
@@ -86,7 +88,6 @@ public class RecipesRepository : IRecipesRepository
 				query = query.OrderByDescending(r => r.CreatedOn);
 			}
 		}
-
 		if (filter.Amount.HasValue && filter.Page.HasValue)
 		{
 			query = query.Skip(filter.Amount.Value * (filter.Page.Value - 1));
