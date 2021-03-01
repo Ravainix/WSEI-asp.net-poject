@@ -14,8 +14,8 @@ const CommentsList = ({ comments = [] }) => {
   return (
     <>
       {comments.map((comment) => (
-        <Col xs="12">
-          <Comment />
+        <Col key={comment.createdOn} xs="12">
+          <Comment comment={comment} />
         </Col>
       ))}
     </>

@@ -10,8 +10,9 @@ import CommentAddNew from "./CommentAddNew";
 const Comments = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { id } = useParams();
-  const { data, isLoading, error } = useQuery(`comments-${id}`, () =>
-    getAll(id)
+  const { data, isLoading, isError, isSuccess } = useQuery(
+    `comments-${id}`,
+    () => getAll(id)
   );
 
   useEffect(() => {
@@ -22,6 +23,9 @@ const Comments = () => {
     };
     authenticated();
   });
+
+  const sortByDate = (array) =>
+    array.sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn));
 
   return (
     <Col>
@@ -43,7 +47,7 @@ const Comments = () => {
         ) : null}
       </Row>
       <Row>
-        <CommentsList comments={[1, 2]} />
+        {isSuccess ? <CommentsList comments={sortByDate(data)} /> : null}
       </Row>
     </Col>
   );

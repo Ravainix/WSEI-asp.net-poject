@@ -16,10 +16,13 @@ const StyledTextarea = styled.textarea`
 const CommentForm = ({ recipeId, submitFn }) => {
   const formik = useFormik({
     initialValues: {
-      recipeId,
+      RecipeId: parseInt(recipeId),
       content: "",
     },
-    onSubmit: (values) => submitFn(values),
+    onSubmit: (values) => {
+      debugger;
+      submitFn(values);
+    },
   });
 
   return (

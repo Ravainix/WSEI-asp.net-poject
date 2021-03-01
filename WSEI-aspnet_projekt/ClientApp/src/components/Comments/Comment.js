@@ -21,15 +21,15 @@ const CommentText = styled.div`
   margin-top: 0.7rem;
 `;
 
-const Comment = ({}) => {
+const Comment = ({ comment: { userName, content, createdOn } }) => {
   return (
     <CommentContent>
       <Col xs="12">
-        <Username>Sample username</Username>
-        <CreatedAt>12.12.2012</CreatedAt>
+        <Username>{userName}</Username>
+        <CreatedAt>{new Date(createdOn).toLocaleString()}</CreatedAt>
       </Col>
       <Col xs="12">
-        <CommentText>To jest testowy komentarz 🤣</CommentText>
+        <CommentText>{content}</CommentText>
       </Col>
     </CommentContent>
   );
