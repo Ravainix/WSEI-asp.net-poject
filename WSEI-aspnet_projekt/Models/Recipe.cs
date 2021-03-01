@@ -22,7 +22,7 @@ namespace WSEI_aspnet_projekt.Models
 		[Column(TypeName = "nvarchar(300)")]
 		public string Description { get; set; }
 		[Required]
-		[Column(TypeName = "nvarchar(100)")]
+		[Column(TypeName = "nvarchar(450)")]
 		public string UserId { get; set; }
 		[Column(TypeName = "bit")]
 		public bool Hidden { get; set; }
@@ -54,6 +54,8 @@ namespace WSEI_aspnet_projekt.Models
 		public virtual ICollection<Comment> Comments { get; set; }
 		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual ICollection<Rating> Ratings { get; set; }
+		[System.Text.Json.Serialization.JsonIgnore]
+		public virtual ApplicationUser User { get; set; }
 	}
 }
  
