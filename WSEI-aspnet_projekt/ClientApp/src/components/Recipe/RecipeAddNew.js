@@ -2,10 +2,9 @@
 import RecipeForm from "./RecipeForm";
 import { Redirect } from "react-router";
 
-import * as RecipeApi from "../helpers/recipesApi";
-import authService from "./api-authorization/AuthorizeService";
+import * as RecipeApi from "../../helpers/recipesApi";
 
-const AddRecipe = () => {
+const RecipeAddNew = () => {
   const [recipe, setRecipe] = useState(null);
 
   const handleFormSubmit = async (formData) => {
@@ -26,4 +25,4 @@ const AddRecipe = () => {
   );
 };
 
-export default AddRecipe;
+export default RecipeAddNew;

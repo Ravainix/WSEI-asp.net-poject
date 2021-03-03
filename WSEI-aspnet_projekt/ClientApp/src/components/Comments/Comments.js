@@ -10,10 +10,7 @@ import CommentAddNew from "./CommentAddNew";
 const Comments = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { id } = useParams();
-  const { data, isLoading, isError, isSuccess } = useQuery(
-    `comments-${id}`,
-    () => getAll(id)
-  );
+  const { data, isSuccess } = useQuery(`comments-${id}`, () => getAll(id));
 
   useEffect(() => {
     const authenticated = async () => {

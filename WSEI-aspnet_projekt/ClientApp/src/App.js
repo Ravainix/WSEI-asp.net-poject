@@ -6,10 +6,9 @@ import HeroPage from "./components/Pages/HeroPage";
 import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
 import ApiAuthorizationRoutes from "./components/api-authorization/ApiAuthorizationRoutes";
 import { ApplicationPaths } from "./components/api-authorization/ApiAuthorizationConstants";
-import RecipesContainer from "./components/BrowseRecipes/Container/RecipesContainer";
 import RecipePage from "./components/Pages/RecipePage";
-import AddRecipe from "./components/AddRecipe";
-import UpdateRecipe from "./components/UpdateRecipe";
+import RecipeAddNew from "./components/Recipe/RecipeAddNew";
+import UpdateRecipe from "./components/Recipe/RecipeUpdate";
 import NoMatch from "./components/common/NoMatch";
 import BrowseRecipesPage from "./components/Pages/BrowseRecipesPage";
 
@@ -32,7 +31,7 @@ const App = () => (
 const Recipes = ({ match: { url } }) => (
   <Switch>
     <AuthorizeRoute path={`${url}/update/:id`} component={UpdateRecipe} />
-    <AuthorizeRoute path={`${url}/add`} component={AddRecipe} />
+    <AuthorizeRoute path={`${url}/add`} component={RecipeAddNew} />
     <Route
       exact
       path={`${url}/user`}
