@@ -41,7 +41,6 @@ const NavMenu = () => {
     };
 
     authenticate();
-    console.log("zalogowany ", isAuthenticated);
   }, []);
 
   const toggleNavbar = () => {

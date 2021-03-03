@@ -19,7 +19,14 @@ const BrowseRecipesPage = ({ queryFn }) => {
   }
 
   if (error) {
-    return <Alert color="danger">Something went wrong. 😒</Alert>;
+    return (
+      <Alert color="danger">
+        Something went wrong.{" "}
+        <span role="img" aria-label="unamused face">
+          😒
+        </span>
+      </Alert>
+    );
   }
 
   return (
