@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import { Alert } from "reactstrap";
 
 import Loader from "../common/Loader";
+import Emoji from "../common/Emoji";
 
 const BrowseRecipesPage = ({ queryFn }) => {
   const { data, isFetching, error } = useQuery(
@@ -21,10 +22,7 @@ const BrowseRecipesPage = ({ queryFn }) => {
   if (error) {
     return (
       <Alert color="danger">
-        Something went wrong.{" "}
-        <span role="img" aria-label="unamused face">
-          😒
-        </span>
+        Coś poszło nie tak. <Emoji symbol="😒" label="unamused face" />
       </Alert>
     );
   }

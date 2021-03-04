@@ -1,5 +1,6 @@
 import React from "react";
 import Col from "reactstrap/lib/Col";
+import Emoji from "../common/Emoji";
 import Comment from "./Comment";
 
 const CommentsList = ({ comments = [] }) => {
@@ -8,9 +9,7 @@ const CommentsList = ({ comments = [] }) => {
       <Col>
         <span>
           Brak komentarzy.
-          <span role="img" aria-label="Downcast face with sweat emoji">
-            😓
-          </span>
+          <Emoji symbol="😓" label="Downcast face with sweat emoji" />
         </span>
       </Col>
     );
