@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useQueryClient, useMutation } from "react-query";
 import CommentForm from "./CommentForm";
 import { create as createComment } from "../../helpers/commentsApi";

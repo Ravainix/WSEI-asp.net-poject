@@ -1,5 +1,5 @@
 ﻿import { Row } from "reactstrap";
-import RecipeItem from "./BrowseRecipes/Card/RecipeItem";
+import RecipeItem from "../BrowseRecipes/Card/RecipeItem";
 import React from "react";
 
 const RecipesList = ({ recipes, userRecipes }) => {

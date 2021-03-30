@@ -1,6 +1,6 @@
 ﻿import React from "react";
 
-import RecipesList from "../../RecipesList";
+import RecipesList from "../../Recipe/RecipesList";
 
 const RecipesContainer = ({ recipes }) => {
   return (
