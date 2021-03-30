@@ -8,6 +8,7 @@ namespace WSEI_aspnet_projekt.Services
 {
 	public interface IRatingsService
 	{
+		public int GetRating(int recipeId, string userId);
 		public void AddRating(Rating comment);
 		public MyResponse DeleteRating(int id, string userId);
 	}

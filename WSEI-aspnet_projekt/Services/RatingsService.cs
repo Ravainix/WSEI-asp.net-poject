@@ -16,6 +16,12 @@ namespace WSEI_aspnet_projekt.Services
 			_ratingsRepository = ratingsRepository;
 		}
 
+		public int GetRating(int recipeId, string userId)
+		{
+			Rating rating = _ratingsRepository.GetRating(recipeId, userId);
+			return rating == null ? 0 : rating.Rate;
+		}
+
 		public void AddRating(Rating rating)
 		{
 			Rating ratingFromDb = _ratingsRepository.GetRating(rating.RecipeId, rating.UserId);

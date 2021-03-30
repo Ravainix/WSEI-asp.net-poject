@@ -34,16 +34,6 @@ namespace WSEI_aspnet_projekt.Repositories
 			CalculateRatingsForRecipe(rating.RecipeId);
 		}
 
-		public Rating GetRating(int id)
-		{
-			Rating rating = _context.Ratings.Find(id);
-			if (rating != null)
-			{
-				_context.Entry(rating).State = EntityState.Detached;
-			}
-			return rating;
-		}
-
 		public Rating GetRating(int recipeId, string userId)
 		{
 			return _context.Ratings.Where(r => r.RecipeId == recipeId && r.UserId.Equals(userId)).FirstOrDefault();

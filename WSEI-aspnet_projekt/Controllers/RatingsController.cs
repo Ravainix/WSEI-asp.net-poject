@@ -40,6 +40,14 @@ namespace WSEI_aspnet_projekt.Controllers
             return _ratingsService.DeleteRating(recipeId, GetUserId());
         }
 
+        // GET: api/ratings/{recipeId}
+        [Authorize]
+        [HttpGet("{recipeId}")]
+        public ActionResult<int> GetRating(int recipeId)
+        {
+            return _ratingsService.GetRating(recipeId, GetUserId());
+        }
+
         private string GetUserId()
         {
             return User.FindFirstValue(ClaimTypes.NameIdentifier);

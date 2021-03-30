@@ -10,7 +10,6 @@ namespace WSEI_aspnet_projekt.Repositories
 	{
 		public void PostRating(Rating rating);
 		public void PutRating(Rating rating);
-		public Rating GetRating(int id);
 		public Rating GetRating(int recipeId, string userId);
 		public void DeleteRating(Rating rating);
 	}

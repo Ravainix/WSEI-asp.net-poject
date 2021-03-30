@@ -138,13 +138,6 @@ public class RecipesRepository : IRecipesRepository
 		_context.SaveChanges();
 	}
 
-	public bool IsFavoriteRecipeAdded(FavoriteRecipe favoriteRecipe)
-	{
-		return _context.FavoriteRecipes
-			.Where(f => f.RecipeId == favoriteRecipe.RecipeId && f.UserId.Equals(favoriteRecipe.UserId))
-			.Any();
-	}
-
 	public void PostFavoriteRecipe(FavoriteRecipe favoriteRecipe)
 	{
 		_context.FavoriteRecipes.Add(favoriteRecipe);
@@ -169,6 +162,13 @@ public class RecipesRepository : IRecipesRepository
 	{
 		return _context.Recipes
 			.Where(r => r.Id == id)
+			.Any();
+	}
+
+	public bool IsFavoriteRecipeAdded(FavoriteRecipe favoriteRecipe)
+	{
+		return _context.FavoriteRecipes
+			.Where(f => f.RecipeId == favoriteRecipe.RecipeId && f.UserId.Equals(favoriteRecipe.UserId))
 			.Any();
 	}
 }

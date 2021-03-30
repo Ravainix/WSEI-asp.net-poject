@@ -20,7 +20,7 @@ namespace WSEI_aspnet_projekt.Services
 
 		public string SaveImage(IFormFile imageFile)
 		{
-			string imageName = Guid.NewGuid() + "-" + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(imageFile.FileName);
+			string imageName = Guid.NewGuid() + "-" + DateTime.Now.ToString("yyMMdd") + Path.GetExtension(imageFile.FileName);
 			var imagePath = Path.Combine(_hostEnvironment.ContentRootPath, "Images", imageName);
 			using (var fileStream = new FileStream(imagePath, FileMode.Create))
 			{

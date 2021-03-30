@@ -32,7 +32,7 @@ namespace WSEI_aspnet_projekt.Controllers
             return CreatedAtAction("GetComment", new { id = comment.Id }, comment);
         }
 
-        // GET: api/comments
+        // GET: api/comments/{recipeId}
         [HttpGet("{recipeId}")]
         public List<Comment> GetCommentsForRecipe(int recipeId)
         {
